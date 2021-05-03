@@ -1,0 +1,32 @@
+Initializing Log4j Parameters
+Setting up a Environment parameters - Logger was established
+Instance of Validation Provider - Returning next set of derived words to contrast with Dictionary 
+New Test Method is being initialized 
+Test method was completed
+New Test Method is being initialized 
+User Inserted invalid characters Exceptionnull
+Wrong inputs were inserted - Filtered Achieved over Original String
+ User forgot to introduce a valid input parameter null
+Test method was completed
+New Test Method is being initialized 
+ User forgot to introduce a valid input parameter null
+Test method was completed
+Instance of String Provider - Locating word for next Dictionary Search
+New Test Method is being initialized 
+Test method was completed
+New Test Method is being initialized 
+User Inserted invalid characters Exceptionnull
+Wrong inputs were inserted - Filtered Achieved over Original String
+ User forgot to introduce a valid input parameter null
+Test method was completed
+New Test Method is being initialized 
+User Inserted invalid characters Exceptionnull
+Wrong inputs were inserted - Filtered Achieved over Original String
+ User forgot to introduce a valid input parameter null
+Test method was completed
+New Test Method is being initialized 
+Test method was completed
+New Test Method is being initialized 
+User Inserted invalid characters Exceptionnull
+Wrong inputs were inserted - Filtered Achieved over Original String
+Test method was completed

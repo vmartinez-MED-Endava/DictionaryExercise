@@ -1,5 +1,10 @@
 package com.endava.workshop.utils.helper;
 
+import com.endava.workshop.utils.exceptions.IncorrectInputParameter;
+import com.endava.workshop.utils.exceptions.OutOfMemoryException;
+import com.endava.workshop.utils.logger.MLogger;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -11,17 +16,24 @@ public class StringManager {
     public StringManager(){ }
 
 
-    public List<String> getStringSubsets(String str){
+    public List<String> getStringSubsets(String str)  {
 
         String []stringArr = stringToStringArray(str);
-        List<String[]>  stringSubsets = getStringSubsetsList(stringArr, 0, stringArr.length-1);
-        List<String> subStrings = stringArraysToStrings(stringSubsets);
 
-        return subStrings;
+        try {
+
+            List<String[]> stringSubsets = getStringSubsetsList(stringArr, 0, stringArr.length - 1);
+            List<String> subStrings = stringArraysToStrings(stringSubsets);
+            return subStrings;
+
+        }catch (OutOfMemoryException ex){
+            MLogger.error("Data Processing overpassed the amount of available memory");
+            return null;
+        }
     }
 
 
-    private List<String[]> getStringSubsetsList(String[]arr, int low, int high){
+    private List<String[]> getStringSubsetsList(String[]arr, int low, int high) throws OutOfMemoryException {
         List<String[]> r = new ArrayList<>();
 
         if(low==high){
@@ -71,11 +83,19 @@ public class StringManager {
         Pattern pattern = Pattern.compile("[^a-z A-Z]");
         Matcher matcher = pattern.matcher(str);
 
-        String number = matcher
+        String filteredStr = matcher
                 .replaceAll("")
                 .replace(" ","");
 
-        return number;
+        if(filteredStr.length() != str.length()){
+            try {
+                throw new IncorrectInputParameter(new Exception());
+            }catch (IncorrectInputParameter e){
+                MLogger.error("Wrong inputs were inserted - Filtered Achieved over Original String");
+            }
+        }
+
+        return filteredStr.toUpperCase();
     }
 
     /**

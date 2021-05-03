@@ -1,4 +1,4 @@
-package com.endava.workshop.data;
+package com.endava.workshop.data.dictionary;
 
 import java.util.Arrays;
 import java.util.HashSet;

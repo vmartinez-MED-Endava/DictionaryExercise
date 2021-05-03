@@ -1,67 +1,101 @@
 package com.endava.workshop.suites;
 
+import com.endava.workshop.data.dataprovider.SearchDataProvider;
+import com.endava.workshop.data.dataprovider.ValidationDataProvider;
 import com.endava.workshop.services.Dictionary;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
 
-public class DictionaryTest {
+public class DictionaryTest extends BaseTest{
 
     Dictionary dictionary;
 
-    @BeforeClass
+    @BeforeClass(description = "Initialize the Dictionary for executing our Tests")
     public void loadDictionary(){
         dictionary = new Dictionary();
 
     }
 
-        /*public static void main(String[] args) {
-        String s = "WORKING";
-        //String [] sl = stringToStringArray(s);
-        //System.out.println(sl[0]);
-        //System.out.println(sl.length);
+    @Test(description = "Validate Dictionary output when an Empty Input is passed by parameter")
+    public void noInputOnDictionaryValidation(){
+        List<String> derivedWords = dictionary.getEnglishWordsFromString("");
 
-        Dictionary dr = new Dictionary();
-        List<String> strs = dr.getEnglishWordsFromString(s);
-        strs.forEach(word-> System.out.println(word));
-        }*/
+        boolean isNullList = derivedWords == null;
 
-
-    @Test
-    public void englishWordsValidation(){
-        String word = "Working";
-        String testWord1 = "work";
-        String testWord2 = "king";
-        String testWord3 = "win";
-
-
-        List<String> derivedWords = dictionary.getEnglishWordsFromString(word);
-        System.out.println(derivedWords.size());
-        derivedWords.forEach(x-> System.out.println(x));
-
+        Assert.assertTrue(isNullList == true, "The list of English Words is null");
     }
 
-    @Test
-    public void stringToStringArrayValidation() {
-        String str1  = "hello";
-        String str2  = "";
-        String str3  = "%$#%#&/&";
-        String str4  = "hh ll";
+    @Test(description = "Validate Dictionary output when a space Input is passed by parameter")
+    public void spaceCharInputOnDictionaryValidation(){
+        List<String> derivedWords = dictionary.getEnglishWordsFromString(" ");
 
-        /*String[]arr1 = dictionary.stringToStringArray(str1);
-        Assert.assertTrue(arr1.length == str1.length());
+        boolean isNullList = derivedWords == null;
 
-
-        String[]arr2 = dictionary.stringToStringArray(str2);
-        Assert.assertTrue(arr2.length == 0);
-
-        String[]arr3 = dictionary.stringToStringArray(str3);
-        Assert.assertTrue(arr3.length == 0);
-
-        String[]arr4 = dictionary.stringToStringArray(str4);
-        Assert.assertTrue(arr4.length == str4.length());*/
+        Assert.assertTrue(isNullList == true, "The list of English Words is null");
     }
 
+    @Test(description = "Validate Dictionary output when a unique special character Input is passed by parameter")
+    public void specialCharacterInputOnDictionaryValidation(){
+        List<String> derivedWords = dictionary.getEnglishWordsFromString("!");
+
+        boolean isNullList = derivedWords == null;
+
+        Assert.assertTrue(isNullList == true, "The list of English Words is null");
+    }
+
+    @Test(description = "Validate Dictionary output when a Two special characters Input are passed by parameter")
+    public void multipleSpecialCharactersInputOnDictionaryValidation(){
+        List<String> derivedWords = dictionary.getEnglishWordsFromString("! [");
+
+        boolean isNullList = derivedWords == null;
+
+        Assert.assertTrue(isNullList == true, "The list of English Words is null");
+    }
+
+    @Test(description = "Validate Dictionary output with random valid input")
+    public void twoValidCharsInputOnDictionaryValidation(){
+        List<String> derivedWords = dictionary.getEnglishWordsFromString("ab");
+
+        boolean outputPowerOfTwo = derivedWords.size() == 0;
+
+        Assert.assertTrue(outputPowerOfTwo, "The list of English Words is empty");
+    }
+
+    @Test(description = "Validate Dictionary output with long random valid input")
+    public void validCharsInputOnDictionaryValidation(){
+        List<String> derivedWords = dictionary.getEnglishWordsFromString("abfgdg hfsds pho rer asa");
+
+        boolean outputPowerOfTwo = derivedWords.size() > 0;
+
+        Assert.assertTrue(outputPowerOfTwo, "The list of English Words is not empty");
+    }
+
+    @Test(description = "Validate Dictionary output with default wordTest",
+            dataProvider= "StringProvider", dataProviderClass= SearchDataProvider.class)
+    public void predeterminedWordInputOnDictionaryValidation(String wordTest){
+        List<String> derivedWords = dictionary.getEnglishWordsFromString(wordTest);
+
+        boolean outputPowerOfTwo = derivedWords.size() > 0;
+
+        Assert.assertTrue(outputPowerOfTwo, "The list of English Words is not empty");
+    }
+
+    @Test(description = "Validate expected derived words were stored in Dictionary ",
+            dataProvider= "ValidationProvider", dataProviderClass= ValidationDataProvider.class)
+    public void expectedDerivedWordsOnDictionaryValidation(String wordTest, String valStr1, String valStr2, String valStr3){
+        List<String> derivedWords = dictionary.getEnglishWordsFromString(wordTest);
+
+        boolean valStringInDict1 = derivedWords.contains(valStr1);
+        Assert.assertTrue(valStringInDict1, "Derived Word was found in Dictionary");
+
+        boolean valStringInDict2 = derivedWords.contains(valStr2);
+        Assert.assertTrue(valStringInDict2, "Derived Word was found in Dictionary");
+
+        boolean valStringInDict3 = derivedWords.contains(valStr3);
+        Assert.assertTrue(valStringInDict3, "Derived Word was found in Dictionary");
+    }
 }

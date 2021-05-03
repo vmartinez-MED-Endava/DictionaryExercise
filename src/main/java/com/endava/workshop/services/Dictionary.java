@@ -1,6 +1,7 @@
 package com.endava.workshop.services;
 
-import com.endava.workshop.data.EnglishDictionary;
+import com.endava.workshop.data.dictionary.EnglishDictionary;
+import com.endava.workshop.utils.exceptions.EmptyInputParameterException;
 import com.endava.workshop.utils.helper.StringManager;
 
 import java.util.HashSet;
@@ -24,10 +25,11 @@ public class Dictionary {
      * @param originalString
      * @return
      */
-    public List<String> getEnglishWordsFromString(String originalString){ //Unique Public
+    public List<String> getEnglishWordsFromString(String originalString) { //Unique Public
 
         String filteredStr = cleanString(originalString);
-        System.out.println(filteredStr);
+        if(filteredStr==null) return null;
+
         List<String> stringSubsetsList = stringManager.getStringSubsets(filteredStr);
         List<String> englishWords = filterEnglishWords(stringSubsetsList);
 
@@ -41,7 +43,18 @@ public class Dictionary {
      * @return
      */
     private String cleanString(String str){
-        return stringManager.getOnlyAlphabetLetters(str);
+
+        String filteredWord = stringManager.getOnlyAlphabetLetters(str);
+
+        try {
+            if (filteredWord == "" || filteredWord.equals(null)) {
+                throw new EmptyInputParameterException(new Exception());
+            }
+        }catch (EmptyInputParameterException exception){
+            return null;
+        }
+
+        return filteredWord;
     }
 
     /**
