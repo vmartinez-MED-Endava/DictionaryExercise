@@ -11,11 +11,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+/**
+ * General class for handling different operations over Strings
+ */
 public class StringManager {
 
     public StringManager(){ }
 
 
+    /**
+     * Method to retrieve a List of SubStrings obtained from a root string
+     * @param str
+     * @return
+     */
     public List<String> getStringSubsets(String str)  {
 
         String []stringArr = stringToStringArray(str);
@@ -32,7 +40,14 @@ public class StringManager {
         }
     }
 
-
+    /**
+     * Method to recursively explore an array of chars in order to get all the different possible combinations
+     * @param arr
+     * @param low
+     * @param high
+     * @return
+     * @throws OutOfMemoryException
+     */
     private List<String[]> getStringSubsetsList(String[]arr, int low, int high) throws OutOfMemoryException {
         List<String[]> r = new ArrayList<>();
 
@@ -50,6 +65,13 @@ public class StringManager {
         return r;
     }
 
+    /**
+     * Method to sum a two Lists storing arrays of Strings.
+     * Both arrays cna have different lengths.
+     * @param a
+     * @param b
+     * @return
+     */
     public List<String[]> sumLists(List<String[]>a, List<String[]>b){
         List<String[]> res = new ArrayList<String[]>();
         if(a.size()==0 ) return new ArrayList<>();
@@ -63,6 +85,13 @@ public class StringManager {
         return res;
     }
 
+    /**
+     * Method to Sum Two Arrays of Strings
+     * For this purpose only two arrays can be added at a given instant
+     * @param a
+     * @param b
+     * @return
+     */
     public String[] sumStringArrs(String[]a, String[]b){
         String[] c=new String[a.length + b.length];
 

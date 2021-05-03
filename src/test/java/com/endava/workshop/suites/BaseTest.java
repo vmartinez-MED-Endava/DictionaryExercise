@@ -6,12 +6,11 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 
 public class BaseTest {
-    MLogger mLogger;
+
 
     @BeforeTest
     public void setUpEnvironment(){
-        mLogger = new MLogger();
-        mLogger.info("Setting up a Environment parameters - Logger was established");
+        MLogger.info("Setting up a Environment parameters - Logger was established");
     }
 
     @BeforeMethod

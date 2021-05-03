@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Implementation of a Dictionary for an English Language context
+ */
 public class EnglishDictionary implements BaseDictionary {
 
     private Set<String> localDictionary;

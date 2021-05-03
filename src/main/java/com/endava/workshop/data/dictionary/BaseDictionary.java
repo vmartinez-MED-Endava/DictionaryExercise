@@ -2,6 +2,9 @@ package com.endava.workshop.data.dictionary;
 
 import java.util.Set;
 
+/**
+ * General scheme for dictating the common methods and attributes a dictionary should provide
+ */
 public interface BaseDictionary {
 
     /**
