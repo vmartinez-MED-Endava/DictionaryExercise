@@ -1,5 +1,8 @@
 package com.endava.workshop.utils.exceptions;
-import org.apache.log4j.Logger;
+
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * General class for handling all kind of customized exceptions
@@ -7,15 +10,17 @@ import org.apache.log4j.Logger;
  */
 public class HandlerException extends Exception {
         private String code;
+        private Logger logger;
 
     /**
      * Saves Exception code and Logs the Exception message in Tracking file
-     * @param code
      * @param message
      */
-    public HandlerException(String code, String message) {
-        this.setCode(code);
-        Logger.getLogger("Logger").error(code + message);
+    public HandlerException(String message) {
+        if(logger ==null){
+            logger = LogManager.getLogger(HandlerException.class);
+        }
+        logger.info(message);
     }
 
     /**
@@ -27,7 +32,7 @@ public class HandlerException extends Exception {
     public HandlerException(String code, String message, Throwable cause) {
         super(message, cause);
         this.setCode(code);
-        Logger.getLogger("Logger").error(code + message);
+        logger.error(code + message);
     }
 
     /**

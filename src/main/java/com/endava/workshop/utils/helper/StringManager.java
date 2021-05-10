@@ -1,22 +1,32 @@
 package com.endava.workshop.utils.helper;
 
 import com.endava.workshop.utils.exceptions.IncorrectInputParameter;
+import com.endava.workshop.utils.exceptions.NullException;
 import com.endava.workshop.utils.exceptions.OutOfMemoryException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * General class for handling different operations over Strings
  */
 public class StringManager {
 
-    public StringManager(){ }
+    Logger logger ;
+
+    public StringManager(){
+        if(logger == null) {
+            logger = LogManager.getLogger(StringManager.class);
+        }
+    }
 
 
     /**
@@ -24,20 +34,12 @@ public class StringManager {
      * @param str
      * @return
      */
-    public List<String> getStringSubsets(String str)  {
-
+    public List<String> getStringSubsets(String str) throws OutOfMemoryException {
         String []stringArr = stringToStringArray(str);
+        List<String[]> stringSubsets = getStringSubsetsList(stringArr, 0, stringArr.length - 1);
+        List<String> subStrings = stringArraysToStrings(stringSubsets);
 
-        try {
-
-            List<String[]> stringSubsets = getStringSubsetsList(stringArr, 0, stringArr.length - 1);
-            List<String> subStrings = stringArraysToStrings(stringSubsets);
-            return subStrings;
-
-        }catch (OutOfMemoryException ex){
-            Logger.getLogger("Logger").error("Data Processing overpassed the amount of available memory");
-            return null;
-        }
+        return subStrings;
     }
 
     /**
@@ -46,22 +48,21 @@ public class StringManager {
      * @param low
      * @param high
      * @return
-     * @throws OutOfMemoryException
      */
-    private List<String[]> getStringSubsetsList(String[]arr, int low, int high) throws OutOfMemoryException {
-        List<String[]> r = new ArrayList<>();
+    private List<String[]> getStringSubsetsList (String[]arr, int low, int high){
+            List<String[]> r = new ArrayList<>();
 
-        if(low==high){
-            r.add(new String[]{arr[low]});
-        }else{
-            int mid = (high + low)/2;
-            List<String[]>left  = getStringSubsetsList(arr,low, mid );
-            List<String[]>right = getStringSubsetsList(arr,mid+1, high);
+            if (low == high) {
+                r.add(new String[]{arr[low]});
+            } else {
+                int mid = (high + low) / 2;
+                List<String[]> left = getStringSubsetsList(arr, low, mid);
+                List<String[]> right = getStringSubsetsList(arr, mid + 1, high);
 
-            left.forEach(x->r.add(x));
-            right.forEach(x->r.add(x));
-            sumLists(left,right).forEach(x->r.add(x));
-        }
+                left.forEach(x -> r.add(x));
+                right.forEach(x -> r.add(x));
+                sumLists(left, right).forEach(x -> r.add(x));
+            }
         return r;
     }
 
@@ -108,7 +109,10 @@ public class StringManager {
     /**
      * Method to filter out numbers and special characters
      */
-    public String getOnlyAlphabetLetters(String str){
+    public String getOnlyAlphabetLetters(String str) throws IncorrectInputParameter, NullException {
+
+        if(str == null) throw new NullException();
+
         Pattern pattern = Pattern.compile("[^a-z A-Z]");
         Matcher matcher = pattern.matcher(str);
 
@@ -117,11 +121,9 @@ public class StringManager {
                 .replace(" ","");
 
         if(filteredStr.length() != str.length()){
-            try {
-                throw new IncorrectInputParameter(new Exception());
-            }catch (IncorrectInputParameter e){
-                Logger.getLogger("Logger").error("Wrong inputs were inserted - Filtered Achieved over Original String");
-            }
+            logger.error("Wrong input parameter was typed - Special Character exception");
+            logger.error("Input parameter was : -" + str + "-");
+            throw new IncorrectInputParameter();
         }
 
         return filteredStr.toUpperCase();
@@ -146,5 +148,20 @@ public class StringManager {
         return lst.stream().map(x->
                 String.join(",",x).replace(",",""))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Method to generate a random string of a given size without alphabetic and numeric chars
+     * @param stringSize (int) : Expected String length as an output
+     * @return a String of length stringSize composed of random (A to Z) characters.
+     */
+    public String generateRandomStringOfSize(int stringSize){
+        String seeds = "INGORKW";
+
+        return IntStream.range(0, stringSize)
+                .map(
+                        i -> new SecureRandom().nextInt(seeds.length()))
+                .mapToObj(randomInt -> seeds.substring(randomInt, randomInt + 1))
+                .collect(Collectors.joining());
     }
 }
