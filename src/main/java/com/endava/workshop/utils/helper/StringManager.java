@@ -2,7 +2,7 @@ package com.endava.workshop.utils.helper;
 
 import com.endava.workshop.utils.exceptions.IncorrectInputParameter;
 import com.endava.workshop.utils.exceptions.OutOfMemoryException;
-import com.endava.workshop.utils.logger.MLogger;
+import org.apache.log4j.Logger;
 
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class StringManager {
             return subStrings;
 
         }catch (OutOfMemoryException ex){
-            MLogger.error("Data Processing overpassed the amount of available memory");
+            Logger.getLogger("Logger").error("Data Processing overpassed the amount of available memory");
             return null;
         }
     }
@@ -120,7 +120,7 @@ public class StringManager {
             try {
                 throw new IncorrectInputParameter(new Exception());
             }catch (IncorrectInputParameter e){
-                MLogger.error("Wrong inputs were inserted - Filtered Achieved over Original String");
+                Logger.getLogger("Logger").error("Wrong inputs were inserted - Filtered Achieved over Original String");
             }
         }
 

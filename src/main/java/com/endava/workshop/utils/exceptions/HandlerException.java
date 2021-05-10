@@ -1,6 +1,5 @@
 package com.endava.workshop.utils.exceptions;
-
-import com.endava.workshop.utils.logger.MLogger;
+import org.apache.log4j.Logger;
 
 /**
  * General class for handling all kind of customized exceptions
@@ -16,7 +15,7 @@ public class HandlerException extends Exception {
      */
     public HandlerException(String code, String message) {
         this.setCode(code);
-        MLogger.error(code + message);
+        Logger.getLogger("Logger").error(code + message);
     }
 
     /**
@@ -28,7 +27,7 @@ public class HandlerException extends Exception {
     public HandlerException(String code, String message, Throwable cause) {
         super(message, cause);
         this.setCode(code);
-        MLogger.error(code + message);
+        Logger.getLogger("Logger").error(code + message);
     }
 
     /**

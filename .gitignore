@@ -25,5 +25,12 @@ hs_err_pid*
 # Target folder
 target/
 
+# log files
+**logs/
+
+#java .iml file
+java-training-2021.iml
+
 # idea
-.idea
+**.idea
+

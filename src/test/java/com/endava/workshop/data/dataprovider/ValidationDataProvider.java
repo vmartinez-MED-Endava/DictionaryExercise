@@ -1,6 +1,6 @@
 package com.endava.workshop.data.dataprovider;
 
-import com.endava.workshop.utils.logger.MLogger;
+import org.apache.log4j.Logger;
 import org.testng.annotations.DataProvider;
 
 /**
@@ -16,7 +16,7 @@ public class ValidationDataProvider {
      */
     @DataProvider(name="ValidationProvider")
     public Object[] getInfoProviderParam(){
-        MLogger.info("Instance of Validation Provider - Returning next set of derived words to contrast with Dictionary ");
+        Logger.getLogger("Logger").info("Instance of Validation Provider - Returning next set of derived words to contrast with Dictionary ");
 
         return new Object[][]
                 {

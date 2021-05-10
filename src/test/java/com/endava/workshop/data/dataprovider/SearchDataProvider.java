@@ -1,7 +1,6 @@
 package com.endava.workshop.data.dataprovider;
 
-
-import com.endava.workshop.utils.logger.MLogger;
+import org.apache.log4j.Logger;
 import org.testng.annotations.DataProvider;
 
 /**
@@ -11,7 +10,7 @@ public class SearchDataProvider {
 
     @DataProvider(name="StringProvider")
     public Object[] getDataProviderParam(){
-        MLogger.info("Instance of String Provider - Locating word for next Dictionary Search");
+        Logger.getLogger("Logger").info("Instance of String Provider - Locating word for next Dictionary Search");
 
         return new Object[][]
                 {

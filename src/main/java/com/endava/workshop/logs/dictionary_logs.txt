@@ -1,5 +1,0 @@
-Initializing Log4j Parameters
-Setting up a Environment parameters - Logger was established
-Instance of String Provider - Locating word for next Dictionary Search
-New Test Method is being initialized 
-Test method was completed
