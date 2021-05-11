@@ -79,7 +79,7 @@ The task for obtaining String subsets based on an *Original String* was attacked
 approach : All the different combinations were obtaining inferring a tree scheme. This approach is contained
 in the String Manager and saved us Memory resources as we avoid the O(n) = n^2 and implemented a n*log(n).
 
-<img src="repo.images/divide_and_conquer.jpg" alt="Divide & Conquer" height="600"/>
+<img src="repo.images/divide_and_conquer.jpg" alt="Divide & Conquer" height="400"/>
 
 This specific method follows a divide and conquer approach. Initially a List is split in half, returning two subLists: the left subList and the right subList.
 The left subList is split in half, producing two new subList. This process is repeated up to achieve a unique char level.  The process is repeated by the right subList. 
