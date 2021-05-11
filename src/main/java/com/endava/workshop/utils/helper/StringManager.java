@@ -70,12 +70,12 @@ public class StringManager {
     /**
      * Method to recursively collect the different combinations derived form a List of Strings
      * This specific method follows a divide and conquer approach
-     * Initialli  arr List is split in half, returning two subList, the left subList and the right subList
+     * Initially arr List is split in half, returning two subList, the left subList and the right subList
      * The left subList is split in half, producing two new subList. This process is repeated up to a char level
      * The process is repeated by the right subList. The process will be stable when all of the possible characters are isolated from each other.
      * Finally, a combination process is executed over these items to produce unique subSets of Strings.
      * Arr = {A,B,C}, Result_Before_Combination-> {{A},{B}, {C}}, Result_After_Combination = {A,B,C,AB,AC,BC,ABC}
-     * The combination takes into account the order as the assumption made at this poing consist in producing subStrings following the String order.
+     * The combination takes into account the order as the assumption made at this point consist in producing subStrings following the String order.
      *
      * @param arr (List<String>) A List of Strings from which all of the possible combinations will be extracted
      * @param low (Int) low Index, Index for exploring the lower bound of the arr List
@@ -170,7 +170,7 @@ public class StringManager {
      * @return a String of length stringSize composed of random (A to Z) characters.
      */
     public String generateRandomStringOfSize(int stringSize){
-        String seeds = "INGORKW";
+        String seeds = "INGORKW"; // Base String from which a new String will be produce randomly
 
         return IntStream.range(0, stringSize)
                 .map(

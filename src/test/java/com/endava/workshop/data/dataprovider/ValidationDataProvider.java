@@ -22,6 +22,5 @@ public class ValidationDataProvider {
                 {
                         { "Working","WON", "KING","OR"}
                 };
-
     }
 }

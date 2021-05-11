@@ -24,30 +24,52 @@ and returns Boolean true if the String passed to it is an English word, return
 false otherwise.
 
 ## English Dictionary
+
+### Requirements 
+- A Dictionary Class  with method named isEnglishWord(String word)
+- A mocked online Dictionary 
+
+
+### General Assumptions
+- The mocking online Dictionary is consumed through a DictionaryImpl interface: The Implementation of this mocked dictionary is known as an EnglishDictionary.
+
+- In this context an EnglishDictionary is a Set of valid English Words stored in the form of a Collection of Strings.
+
+- English Dictionary is reources-limited as it does not contain all the Existent English words. More concisely,
+  the English Dictionary stores substrings derived from the "Working" string. Currently, manages up to 12 words.
+  More importantly, English Dictionary preserves the ordering of the String, so a chunked version of the combinations will be implemented. 
+
+- As stated above, EnglishDictionary is a set of words. Words inside the set belongs to English language. Otherwise, it is assumed it is not
+  an english word.
+
+- UpperCase String is the protocol assumed for storing the Strings in the dictionary, which is represented in this
+  context as a set of Strings. All of the Strings are converted to UpperCase before validating its existence inside the EnglishDictionary.
+
+- It is assumed that the longest english word for this exercise is up to 22 characters in length. A longer string will cause distinct
+  system failures as delay, irregular behaviors and out of the memory exception.
+
 ### Project Structure
-The project is organized following the overall constitution of a POM (Page Object Model)
-simulating the most common behaviors, methods and attributes of this design pattern:
-* A BasePage dictates the most common methods all pages should have as a minimum.
-During this exercise no other pages were required, so the scheme of the parent class
-  was defined as abstract, bearing in mind the necessary methods to accomplish the 
-  required task.
-* A BaseTest functions as a wrapper for complementing the customized behaviors under Test.
+The Project follows a General Java project scheme where two big sections can be highlighted as well: Main and Test section.
+* A DictionaryImpl interface dictates the necessary methods for a Dictionary instance
+  
+* A BaseTest defines common adjustments applied before each Test suite
 
 <img src="repo.images/ProjectStructure.PNG" alt="Project Structure" height="600"/>
 
 * POM is declared to keep on track of the required dependencies : TestNG and Log4j.
 
+* TestNG Annotations are implemented for setting a correct test flow, besides of validating some common exceptions shown in some Tests
+
 * Two types of DataProviders were included : <strong>SearchPattern</strong> & <strong>ValidationData</strong>. 
 
 * Persistence Layer : The function isEnglishWord() made use of a mocked DataBase in charge of
 storing the required dictionary. As many dictionaries could be included, not just an English one, 
-  an implementation named BaseDictionary dictates the common methods any dictionary should be displayed.
+  an implementation named BaseDictionary dictates the common methods any dictionary should display.
   
-* A Logger class keep track on each event ocurred during the Test Suite execution. These logs were stored
-in a filed name dictionary_logs.txt and shown in console, accordingly. 
+* Logger instances track each event during the Test Suite execution. These logs were stored
+in a filed name propertieslogs.txt and shown in console, accordingly. 
   
-* <strong>Dictionary Class</strong> only verifies if certain word exists in a customized dictionary (i.e. English Dictionary).
-The String processing is carried out by the String Manager.
+* <strong>Dictionary Class</strong> only verifies if certain word exists against a limited and customized dictionary (i.e. English Dictionary).
 
 * Multiple exceptions were included for limiting the forbidden states : EmptyInputParameterException,
 IncorrectInputParameter and OutOFMemoryException. 
@@ -58,6 +80,15 @@ approach : All the different combinations were obtaining inferring a tree scheme
 in the String Manager and saved us Memory resources as we avoid the O(n) = n^2 and implemented a n*log(n).
 
 <img src="repo.images/divide_and_conquer.jpg" alt="Divide & Conquer" height="600"/>
+
+This specific method follows a divide and conquer approach. Initially a List is split in half, returning two subLists: the left subList and the right subList.
+The left subList is split in half, producing two new subList. This process is repeated up to achieve a unique char level.  The process is repeated by the right subList. 
+The process will be stable when all of the possible characters are isolated one from each other. Finally, a combination process is executed over these items to produce 
+unique subSets of Strings. 
+
+      *  Arr = {A,B,C}, Result_Before_Combination-> {{A},{B}, {C}}, Result_After_Combination = {A,B,C,AB,AC,BC,ABC}
+
+The combination takes into account the order as the assumption made at this point consist in producing subStrings following the String order.
 
 
 
