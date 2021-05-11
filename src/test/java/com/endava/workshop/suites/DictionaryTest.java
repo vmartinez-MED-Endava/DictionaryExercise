@@ -24,6 +24,8 @@ public class DictionaryTest extends BaseTest{
     private final String LOWERCASE_TEST_WORD = "king";
     private final String CAPITALIZE_TEST_WORD = "King";
     private final String UPPERCASE_TEST_WORD = "KING";
+    private final String NUMBERS_STRING ="12345678";
+    private final String REPEATED_VALID_STRINGS = "RORO";
 
     @BeforeClass(description = "Initialize the Dictionary for executing our Tests")
     public void loadDictionary(){
@@ -149,7 +151,7 @@ public class DictionaryTest extends BaseTest{
         Set<String> maxDictionary = dictionary.getEnglishWordsFromString(maxValidString);
 
         boolean isMaxDictionaryValid = !maxDictionary.isEmpty();
-        softAssert.assertTrue(isMaxDictionaryValid);
+        softAssert.assertTrue(isMaxDictionaryValid, "Max dictionary of words was created as expected");
     }
 
     @Test(description = "Validate Overpassed String length based of the memory capacity available",
@@ -162,6 +164,23 @@ public class DictionaryTest extends BaseTest{
 
         boolean isOverpassedDictionaryValid = !overpassedDictionary.isEmpty();
 
-        softAssert.assertTrue(isOverpassedDictionaryValid);
+        softAssert.assertTrue(isOverpassedDictionaryValid, "Overpassed Dictionary was created as expected");
+    }
+
+    @Test(description = "Validate if Numbers passed by parameter belong to English Dictionary",
+            expectedExceptions = IncorrectInputParameterException.class, priority = 13)
+    public void inputStringContainNumbersValidation() throws HandlerException {
+        Set<String> derivedWords = dictionary.getEnglishWordsFromString(NUMBERS_STRING);
+
+        softAssert.assertNull(derivedWords, "The collection of English words is not empty");
+    }
+
+    @Test(description =" Validate whether two repeated valid words can be recognized as one valid word in the Dictionary", priority = 14)
+    public void twoRepeatedValidStringsValidation() throws HandlerException {
+        Set<String> derivedWords = dictionary.getEnglishWordsFromString(REPEATED_VALID_STRINGS);
+
+        boolean isWordContainedInDictionary = derivedWords.size()>0;
+
+        softAssert.assertTrue(isWordContainedInDictionary, "The collection of English words is not empty");
     }
 }
