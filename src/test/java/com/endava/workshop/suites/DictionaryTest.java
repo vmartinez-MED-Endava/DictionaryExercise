@@ -7,9 +7,7 @@ import com.endava.workshop.utils.exceptions.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.internal.thread.ThreadTimeoutException;
-
-import java.util.List;
-
+import java.util.Set;
 
 
 public class DictionaryTest extends BaseTest{
@@ -35,7 +33,7 @@ public class DictionaryTest extends BaseTest{
 
     @Test(description = "Validate Dictionary output when null is typed as an inpút parameter", expectedExceptions = NullException.class, priority = 0)
     public void nullInputDictionaryValidation() throws HandlerException {
-        List<String>  derivedWords = dictionary.getEnglishWordsFromString(NULL_OBJECT);
+        Set<String> derivedWords = dictionary.getEnglishWordsFromString(NULL_OBJECT);
 
         softAssert.assertNull(derivedWords, "The list of English Words is null");
     }
@@ -43,38 +41,38 @@ public class DictionaryTest extends BaseTest{
     @Test(description = "Validate Dictionary output when an Empty Input is passed by parameter",
             expectedExceptions = EmptyInputParameterException.class, priority = 1)
     public void noInputOnDictionaryValidation() throws HandlerException {
-        List<String> derivedWords = dictionary.getEnglishWordsFromString(EMPTY_STRING);
+        Set<String> derivedWords = dictionary.getEnglishWordsFromString(EMPTY_STRING);
 
         softAssert.assertNull(derivedWords, "The list of English Words is null");
     }
 
     @Test(description = "Validate Dictionary output when a space Input is passed by parameter",
-            expectedExceptions = IncorrectInputParameter.class, priority = 2)
+            expectedExceptions = IncorrectInputParameterException.class, priority = 2)
     public void spaceCharInputOnDictionaryValidation() throws HandlerException {
-        List<String> derivedWords = dictionary.getEnglishWordsFromString(ONE_SPACED_STRING);
+        Set<String> derivedWords = dictionary.getEnglishWordsFromString(ONE_SPACED_STRING);
 
         softAssert.assertNull(derivedWords, "The list of English Words is null");
     }
 
     @Test(description = "Validate Dictionary output when a unique special character Input is passed by parameter",
-            expectedExceptions = IncorrectInputParameter.class, priority = 3)
+            expectedExceptions = IncorrectInputParameterException.class, priority = 3)
     public void specialCharacterInputOnDictionaryValidation() throws HandlerException {
-        List<String> derivedWords = dictionary.getEnglishWordsFromString(SPECIAL_CHARACTER);
+        Set<String> derivedWords = dictionary.getEnglishWordsFromString(SPECIAL_CHARACTER);
 
         softAssert.assertNull(derivedWords, "The list of English Words is null");
     }
 
     @Test(description = "Validate Dictionary output when a Two special characters Input are passed by parameter",
-            expectedExceptions = IncorrectInputParameter.class, priority = 4)
+            expectedExceptions = IncorrectInputParameterException.class, priority = 4)
     public void multipleSpecialCharactersInputOnDictionaryValidation() throws HandlerException {
-        List<String> derivedWords = dictionary.getEnglishWordsFromString(TWO_SPECIAL_CHARACTERS);
+        Set<String> derivedWords = dictionary.getEnglishWordsFromString(TWO_SPECIAL_CHARACTERS);
 
         softAssert.assertNull(derivedWords, "The list of English Words is null");
     }
 
     @Test(description = "Validate Dictionary output with random valid input", priority = 5)
     public void twoValidCharsInputOnDictionaryValidation() throws HandlerException {
-        List<String> derivedWords = dictionary.getEnglishWordsFromString(TWO_VALID_CHARACTERS);
+        Set<String> derivedWords = dictionary.getEnglishWordsFromString(TWO_VALID_CHARACTERS);
 
         boolean outputPowerOfTwo = derivedWords.size() == 0;
 
@@ -82,9 +80,9 @@ public class DictionaryTest extends BaseTest{
     }
 
     @Test(description = "Validate Dictionary output with long random input with spaces in it ",
-            expectedExceptions = IncorrectInputParameter.class, priority = 6)
+            expectedExceptions = IncorrectInputParameterException.class, priority = 6)
     public void invalidLongCharsInputOnDictionaryValidation() throws HandlerException {
-        List<String> derivedWords = dictionary.getEnglishWordsFromString(ONE_RANDOM_SENTENCE_WITH_SPACES);
+        Set<String> derivedWords = dictionary.getEnglishWordsFromString(ONE_RANDOM_SENTENCE_WITH_SPACES);
 
         boolean outputPowerOfTwo = derivedWords.size() > 0;
 
@@ -93,7 +91,7 @@ public class DictionaryTest extends BaseTest{
 
     @Test(description = "Validate Dictionary output with long random input without spaces in it ", priority = 7)
     public void longCharsInputOnDictionaryValidation() throws HandlerException {
-        List<String> derivedWords = dictionary.getEnglishWordsFromString(ONE_RANDOM_SENTENCE_WITHOUT_SPACES);
+        Set<String> derivedWords = dictionary.getEnglishWordsFromString(ONE_RANDOM_SENTENCE_WITHOUT_SPACES);
 
         boolean outputPowerOfTwo = derivedWords.size() > 0;
 
@@ -103,7 +101,7 @@ public class DictionaryTest extends BaseTest{
     @Test(description = "Validate Dictionary output with default wordTest", priority = 8,
             dataProvider= "StringProvider", dataProviderClass= SearchDataProvider.class)
     public void predeterminedWordInputOnDictionaryValidation(String wordTest) throws HandlerException {
-        List<String> derivedWords = dictionary.getEnglishWordsFromString(wordTest);
+        Set<String> derivedWords = dictionary.getEnglishWordsFromString(wordTest);
 
         boolean outputPowerOfTwo = derivedWords.size() > 0;
 
@@ -113,7 +111,7 @@ public class DictionaryTest extends BaseTest{
     @Test(description = "Validate expected derived words were stored in Dictionary ", priority = 9,
             dataProvider= "ValidationProvider", dataProviderClass= ValidationDataProvider.class)
     public void expectedDerivedWordsOnDictionaryValidation(String wordTest, String valStr1, String valStr2, String valStr3) throws HandlerException {
-        List<String> derivedWords = dictionary.getEnglishWordsFromString(wordTest);
+        Set<String> derivedWords = dictionary.getEnglishWordsFromString(wordTest);
 
         boolean validationStringFound1 = derivedWords.contains(valStr1);
         softAssert.assertTrue(validationStringFound1, "Derived Word was found in Dictionary");
@@ -145,7 +143,7 @@ public class DictionaryTest extends BaseTest{
         int maxStringLength = dictionary.getMaxStringLengthInMemory();
         String maxValidString = dictionary.getRandomStringOfSize(maxStringLength);
 
-        List<String> maxDictionary = dictionary.getEnglishWordsFromString(maxValidString);
+        Set<String> maxDictionary = dictionary.getEnglishWordsFromString(maxValidString);
 
         boolean isMaxDictionaryValid = !maxDictionary.isEmpty();
         softAssert.assertTrue(isMaxDictionaryValid);
@@ -157,7 +155,7 @@ public class DictionaryTest extends BaseTest{
         int maxStringLength = dictionary.getMaxStringLengthInMemory();
         String overpassedString = dictionary.getRandomStringOfSize(maxStringLength + 4);
 
-        List<String> overpassedDictionary = dictionary.getEnglishWordsFromString(overpassedString);
+        Set<String> overpassedDictionary = dictionary.getEnglishWordsFromString(overpassedString);
 
         boolean isOverpassedDictionaryValid = !overpassedDictionary.isEmpty();
 

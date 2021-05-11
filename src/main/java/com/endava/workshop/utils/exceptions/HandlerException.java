@@ -9,12 +9,13 @@ import org.apache.logging.log4j.Logger;
  * Following this parent-child pattern permits a better maintainability
  */
 public class HandlerException extends Exception {
-        private String code;
         private Logger logger;
 
     /**
-     * Saves Exception code and Logs the Exception message in Tracking file
-     * @param message
+     * Saves Logs messages in Tracking file
+     * This Constructor validates if there is an actual LogManager instantiated for tracking the exception message
+     *
+     * @param message (String): Customized Exception message - any String describing the exception cause.
      */
     public HandlerException(String message) {
         if(logger ==null){
@@ -24,30 +25,12 @@ public class HandlerException extends Exception {
     }
 
     /**
-     * Method to store Exception information as code, Exception message and the Throwable cause
-     * @param code
-     * @param message
-     * @param cause
+     * Method to store Exception information as Exception message and the Throwable cause
+     * @param message (String) : Any message Exception-related
+     * @param cause (Throwable) : Error and Exception superclass
      */
-    public HandlerException(String code, String message, Throwable cause) {
+    public HandlerException(String message, Throwable cause) {
         super(message, cause);
-        this.setCode(code);
-        logger.error(code + message);
-    }
-
-    /**
-     * Method to retrieve Exception code
-     * @return
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
-     * Method to store Exception code
-     * @param code
-     */
-    public void setCode(String code) {
-        this.code = code;
+        logger.error(message);
     }
 }

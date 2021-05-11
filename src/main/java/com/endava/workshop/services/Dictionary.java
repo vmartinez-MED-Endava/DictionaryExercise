@@ -7,22 +7,59 @@ import com.endava.workshop.utils.helper.StringManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Dictionary Class
- * Validates if a certain String belongs to English grammar.
+ * Dictionary Class Implements the required methods defined in DictionaryImp
+ * In overall validates using a limited dictionary if a certain word belongs to English language
+ * Also returns a dictionary, in this context a set of strings, with some of the English words
  */
-public class Dictionary extends BasePage{
+public class Dictionary implements DictionaryImp{
 
-    EnglishDictionary englishDictionary;
-    StringManager stringManager;
-    List<String> englishWordsList;
-    Logger logger;
+    private EnglishDictionary englishDictionary;
+    private StringManager stringManager;
+    private Set<String> englishWordsList;
+    private Logger logger;
+
+
+    /**
+     *  A Dictionary
+     * @param englishDictionary
+     * @param stringManager
+     * @param englishWordsList
+     * @param logger
+     */
+    public Dictionary(EnglishDictionary englishDictionary, StringManager stringManager, Set<String> englishWordsList, Logger logger) {
+        this.englishDictionary = englishDictionary;
+        this.stringManager = stringManager;
+        this.englishWordsList = englishWordsList;
+        this.logger = logger;
+    }
+
+    /**
+     *
+     * @param englishDictionary
+     * @param stringManager
+     */
+    public Dictionary(EnglishDictionary englishDictionary, StringManager stringManager) {
+        this.englishDictionary = englishDictionary;
+        this.stringManager = stringManager;
+    }
+
+    public Dictionary(Set<String> englishWordsList) {
+        this.englishWordsList = englishWordsList;
+    }
+
+    public Dictionary(EnglishDictionary englishDictionary, StringManager stringManager, Set<String> englishWordsList) {
+        this.englishDictionary = englishDictionary;
+        this.stringManager = stringManager;
+        this.englishWordsList = englishWordsList;
+    }
+
+
 
     /**
      * Method  to Initialize English Dictionary and String Manager. The latter will provide custom methods for
@@ -32,7 +69,7 @@ public class Dictionary extends BasePage{
         logger = LogManager.getLogger(Dictionary.class);
         this.englishDictionary = new EnglishDictionary();
         this.stringManager = new StringManager();
-        this.englishWordsList = new ArrayList<String>();
+        this.englishWordsList = new HashSet<>();
     }
 
     /**
@@ -40,7 +77,7 @@ public class Dictionary extends BasePage{
      * @param originalString
      * @return
      */
-    public List<String> getEnglishWordsFromString(String originalString) throws HandlerException {
+    public Set<String> getEnglishWordsFromString(String originalString) throws HandlerException {
         String filteredStr = cleanString(originalString);
 
         List<String> stringSubsetsList = stringManager.getStringSubsets(filteredStr);
@@ -81,13 +118,13 @@ public class Dictionary extends BasePage{
      * @param lst
      * @return
      */
-    private List<String> filterEnglishWords(List<String> lst) {
+    private Set<String> filterEnglishWords(List<String> lst) {
         Set<String> uniqueWordsSet = new HashSet<String>(lst);
 
         return uniqueWordsSet
                 .stream()
                 .filter(  word-> isEnglishWord(word) )
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     /**
@@ -128,7 +165,33 @@ public class Dictionary extends BasePage{
      * @return
      */
     @Override
-    boolean isEnglishWord(String word) {
+    public boolean isEnglishWord(String word) {
         return englishDictionary.isValidWord(word);
     }
+
+
+    public EnglishDictionary getEnglishDictionary() {
+        return englishDictionary;
+    }
+
+    public void setEnglishDictionary(EnglishDictionary englishDictionary) {
+        this.englishDictionary = englishDictionary;
+    }
+
+    public StringManager getStringManager() {
+        return stringManager;
+    }
+
+    public void setStringManager(StringManager stringManager) {
+        this.stringManager = stringManager;
+    }
+
+    public Set<String> getEnglishWordsList() {
+        return englishWordsList;
+    }
+
+    public void setEnglishWordsList(Set<String> englishWordsList) {
+        this.englishWordsList = englishWordsList;
+    }
+
 }

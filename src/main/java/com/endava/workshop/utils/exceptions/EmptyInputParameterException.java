@@ -3,9 +3,11 @@ package com.endava.workshop.utils.exceptions;
 public class EmptyInputParameterException extends HandlerException {
 
     /**
-     * Method to handle the Exception arose after inserting an Empty value as parameter
+     * Customized Exception for alarming whether the user typed an empty string as parameter instead
+     * of a valid string.
+     *
      */
     public EmptyInputParameterException(){
-        super(" User forgot to introduce a valid input parameter");
+        super(" User forgot to introduce a valid input parameter - Empty String Exception");
     }
 }
