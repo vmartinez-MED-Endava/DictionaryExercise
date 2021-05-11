@@ -45,7 +45,7 @@ public class EnglishDictionary implements BaseDictionary {
         Set<String> newDictionary = new HashSet<String>(
                 Arrays.asList(
                     "RIG", "OR", "OK", "ORG", "WIN", "KING",
-                    "WORKING", "WON", "ONG", "WORK", "IN", "RING"
+                    "WORKING", "WON", "ONG", "WORK", "IN", "RING", "ROW"
                 ));
 
        return newDictionary;

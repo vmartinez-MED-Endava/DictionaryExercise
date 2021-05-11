@@ -115,7 +115,9 @@ public class StringManager {
         for(String strA : listA){
             for(String strB : listB){
                 String strC = strA + strB;
+                String strD = strB + strA;
                 res.add(strC);
+                res.add(strD);
             }
         }
         return res;

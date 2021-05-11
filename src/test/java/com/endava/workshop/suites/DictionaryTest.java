@@ -19,8 +19,8 @@ public class DictionaryTest extends BaseTest{
     private final String SPECIAL_CHARACTER = "!";
     private final String TWO_SPECIAL_CHARACTERS = "! [";
     private final String TWO_VALID_CHARACTERS = "ab";
-    private final String ONE_RANDOM_SENTENCE_WITH_SPACES = "abfgdg hfsds pho rer asa";
-    private final String ONE_RANDOM_SENTENCE_WITHOUT_SPACES = "abfgdghfsdsphorerasa";
+    private final String ONE_RANDOM_SENTENCE_WITH_SPACES = "wko rkn igw rti kng";
+    private final String ONE_RANDOM_SENTENCE_WITHOUT_SPACES = "wkorknigwrtikng";
     private final String LOWERCASE_TEST_WORD = "king";
     private final String CAPITALIZE_TEST_WORD = "King";
     private final String UPPERCASE_TEST_WORD = "KING";
@@ -110,17 +110,20 @@ public class DictionaryTest extends BaseTest{
 
     @Test(description = "Validate expected derived words were stored in Dictionary ", priority = 9,
             dataProvider= "ValidationProvider", dataProviderClass= ValidationDataProvider.class)
-    public void expectedDerivedWordsOnDictionaryValidation(String wordTest, String valStr1, String valStr2, String valStr3) throws HandlerException {
+    public void expectedDerivedWordsOnDictionaryValidation(String wordTest, String valStr1, String valStr2, String valStr3, String valStr4) throws HandlerException {
         Set<String> derivedWords = dictionary.getEnglishWordsFromString(wordTest);
 
-        boolean validationStringFound1 = derivedWords.contains(valStr1);
+        boolean validationStringFound1 = dictionary.containsString(valStr1);
         softAssert.assertTrue(validationStringFound1, "Derived Word was found in Dictionary");
 
-        boolean validationStringFound2 = derivedWords.contains(valStr2);
+        boolean validationStringFound2 = dictionary.containsString(valStr2);
         softAssert.assertTrue(validationStringFound2,"Derived Word was found in Dictionary");
 
-        boolean validationStringFound3 = derivedWords.contains(valStr3);
+        boolean validationStringFound3 = dictionary.containsString(valStr3);
         softAssert.assertTrue(validationStringFound3, "Derived Word was found in Dictionary");
+
+        boolean validationStringFound4 = dictionary.containsString(valStr4);
+        softAssert.assertTrue(validationStringFound4, "Derived Word was found in Dictionary");
     }
 
     @Test(description = "Validate a lowercase String gets converted into a UpperCase string", priority = 10,
@@ -152,8 +155,8 @@ public class DictionaryTest extends BaseTest{
     @Test(description = "Validate Overpassed String length based of the memory capacity available",
             timeOut = 5000, expectedExceptions = ThreadTimeoutException.class, priority = 12)
     public void stringOverpassedMemoryCapacityValidation() throws HandlerException {
-        int maxStringLength = dictionary.getMaxStringLengthInMemory();
-        String overpassedString = dictionary.getRandomStringOfSize(maxStringLength + 4);
+        int maxStringLength = dictionary.getMaxStringLengthInMemory() * 2;
+        String overpassedString = dictionary.getRandomStringOfSize(maxStringLength );
 
         Set<String> overpassedDictionary = dictionary.getEnglishWordsFromString(overpassedString);
 

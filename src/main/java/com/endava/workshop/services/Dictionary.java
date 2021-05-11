@@ -124,7 +124,7 @@ public class Dictionary implements DictionaryImp{
      *
      * @param str (String) : String parameter limited up to 22 characters length
      * @return (String): A cleaned String
-     * @throws HandlerException : Exceptiong thrown whenever the method parameter included any invalidad character.
+     * @throws HandlerException : Exception thrown whenever the method parameter included any invalidad character.
      */
     private String cleanString(String str) throws HandlerException {
         String filteredWord = stringManager.getOnlyAlphabetLetters(str);
@@ -180,7 +180,7 @@ public class Dictionary implements DictionaryImp{
         long availableMemory = Runtime.getRuntime().maxMemory();
         logger.info(" Available memory :" + availableMemory + " bytes.");
 
-        int maxString = (int) Math.floor(Math.log(availableMemory));
+        int maxString = (int) Math.floor(Math.log(availableMemory)) / 2;
         logger.info(" Estimated max String length " + maxString);
 
         return maxString;

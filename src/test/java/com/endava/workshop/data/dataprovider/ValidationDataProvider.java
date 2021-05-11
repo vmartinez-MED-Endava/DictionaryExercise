@@ -20,7 +20,7 @@ public class ValidationDataProvider {
 
         return new Object[][]
                 {
-                        { "Working","WON", "KING","OR"}
+                        { "Working","WON", "KING","OR", "ROW"}
                 };
     }
 }
