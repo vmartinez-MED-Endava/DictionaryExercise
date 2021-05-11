@@ -54,11 +54,15 @@ target/
 #java .iml file
 java-training-2021.iml
 
-# idea
-**.idea
-
 # .iws
 *.iws
+
+# iml
+*.iml
+
+# idea
+.idea/
+**.idea
 
 # IntelliJ
 /out/
