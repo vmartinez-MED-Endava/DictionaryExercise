@@ -29,12 +29,13 @@ public class DictionaryTest extends BaseTest{
     private final String UPPERCASE_TEST_WORD = "KING";
     private final String NUMBERS_STRING ="12345678";
     private final String REPEATED_VALID_STRINGS = "RORO";
+    private final String DEFAULT_TEST_WORD = "WORKING";
+
 
     @BeforeClass(description = "Initialize the Dictionary for executing our Tests")
     public void loadDictionary(){
         dictionary = new Dictionary();
     }
-
 
     @Test(description = "Validate Dictionary output when null is typed as an input parameter", expectedExceptions = NullMethodParameterException.class, priority = 0)
     public void nullInputDictionaryValidation() throws HandlerException {
@@ -108,16 +109,20 @@ public class DictionaryTest extends BaseTest{
 
     @Test(description = "Validate English Dictionary Words could be inferred from the algorithm output ", priority = 7)
     public void inferenceEnglishDictionaryDatasetValidation() throws HandlerException {
-        Set<String> derivedWords = dictionary.getEnglishWordsFromString(ONE_RANDOM_SENTENCE_WITHOUT_SPACES);
-        Set<String> testDataSet = new HashSet<>(Set.of("WORK", "KING", "ROW", "RING"));
+        Set<String> derivedWords = dictionary.getEnglishWordsFromString("WORKING");
+        Set<String> testDataSet = new HashSet<>(Set.of("WORK", "KING", "ROW", "RING", "KNOW"));
 
-        softAssert.assertTrue(derivedWords.containsAll(testDataSet));
+        softAssert.assertFalse(derivedWords.containsAll(testDataSet), "Recursive method was not able to replicate all of the WORDS");
+
+        Set<String> derivedWordsAlternative = dictionary.getEnglishWordsFromString("WORKING", true);
+
+        softAssert.assertTrue(derivedWordsAlternative.containsAll(testDataSet));
     }
 
     @Test(description = "Validate Dictionary output with default wordTest", priority = 8,
             dataProvider= "StringProvider", dataProviderClass= SearchDataProvider.class)
     public void predeterminedWordInputOnDictionaryValidation(String wordTest) throws HandlerException {
-        Set<String> derivedWords = dictionary.getEnglishWordsFromString(wordTest);
+        Set<String> derivedWords = dictionary.getEnglishWordsFromString(wordTest,true);
 
         softAssert.assertTrue(derivedWords.containsAll(dictionary.getEnglishDictionary().getDictionary()), "The list of English Words is not empty");
     }

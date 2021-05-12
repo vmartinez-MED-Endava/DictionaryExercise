@@ -7,6 +7,7 @@ import com.endava.workshop.utils.helper.StringManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -84,14 +85,37 @@ public class Dictionary implements BaseDictionary {
      * For "And" word, the set of subStrings for this word would be set={"A", "AN", "AND"} assuming these are valid words for the dictionary
      * The process consist in subtracting all of the possible combinations of the subStrings into a List and filtering out the repeated Strings
      * Using Set as a collection prevents the use of repeated Strings
+     * ** Note: This method implements a recursive method following the Divide and Conque approach - Performance issue are identified for big input string
      * @param originalString (String): Root String, Any String limited up two 22 chacracters to avoid performance latencies
      * @return (Set<String>): Returns a Set of Valid English Strings
      * @throws HandlerException
      */
     public Set<String> getEnglishWordsFromString(String originalString) throws HandlerException {
+
+        return getEnglishWordsFromString(originalString, false);
+    }
+
+    /**
+     * Method to return a Collection with all valid English words derived from root String
+     * A Collection of derived words consist in a set of all of the subStrings obtained from a base or root String
+     * For "And" word, the set of subStrings for this word would be set={"A", "AN", "AND"} assuming these are valid words for the dictionary
+     * The process consist in subtracting all of the possible combinations of the subStrings into a List and filtering out the repeated Strings
+     * Using Set as a collection prevents the use of repeated Strings
+     * ** Note : This method implements a Character Histogram approach for validating which are the derived and valid words.
+     * A histogram character comparison is done for each individual word in the dictionary against the subString histogram. If both histograms match
+     * Then it is a correct english word.
+     *
+     * @param originalString
+     * @param noRecursion
+     * @return
+     * @throws HandlerException
+     */
+    public Set<String> getEnglishWordsFromString(String originalString, boolean noRecursion) throws HandlerException{
         String filteredStr = cleanString(originalString);
 
-        List<String> stringSubsetsList = stringManager.getStringSubsets(filteredStr);
+        List<String> stringSubsetsList = (noRecursion)?
+                getHistogramSubsetsList(originalString, englishDictionary):
+                stringManager.getStringSubsets(filteredStr);
 
         this.englishWordsSet = filterEnglishWords(stringSubsetsList);
 
@@ -186,8 +210,8 @@ public class Dictionary implements BaseDictionary {
     /**
      * Method to validate if the String parameter corresponds to an English word
      * Validation is carried out by a quick search over an English dictionary.
-     * English dictinary is a Set<String> and if the words is found inside this dictionary,
-     * the function will return true, false otherwise.
+     * English dictinary is a Set<String> and if the word is found inside this dictionary,
+     * then the function will return true, false otherwise.
      * @param word (String) : Word to be validated on a English dictionary instance
      * @return (boolean) : true if the word belongs to the English dictionary
      */
@@ -196,6 +220,70 @@ public class Dictionary implements BaseDictionary {
         return englishDictionary.isValidWord(word);
     }
 
+    /**
+     * Method to return all of the possible subStrings derived from a root String by comparing it against a word histogram from a dictionary
+     * A dictionary is represented in this context as a Set<String> and the histogram of each word of it will be represented as an array of 26 Integer positions
+     * If the dictionary has 13 words, then the final set will have a size of 13 arrays, each one encoding a representation of that particular String
+     * The String representation to an Array is performed through the frequency of letters inside each word : "BOOLEAN" ->A:1 B:1,E:1, L:1 N:1, O:2, [1,1,0,0,1...]
+     * @param string : root string from which all subStrings are obtained
+     * @param englishDictionary (Set<String>) : A Collection of valid English words
+     * @return (List<String>) : A Collection of valid english words
+     */
+    private static List<String> getHistogramSubsetsList(String string, EnglishDictionary englishDictionary) {
+        List<String> subStrings = new ArrayList<>();
+        Set<String> dictionary = englishDictionary.getDictionary();
+        int[] freq = toFreq( string.toUpperCase() );
+
+        for ( String l : dictionary ) {
+            int[] freqIn = toFreq( l );
+            if ( matches( freq, freqIn ) ) {
+                subStrings.add( l );
+            }
+        }
+        return subStrings;
+    }
+
+    /**
+     * Method to validate if two arrays holds the same exact values: Returns true if all values match.
+     * This method is utilized for comparing two arrays representing the repetitions of the letters of the alphabet
+     * Each array position represents a letter in the alphabet, so 26 fix positions is the length of each array
+     * Inside each array position a letter frequency will be stored.
+     *
+     * @param freq (int[]) stores the histogram of the origin letters repetion, i.e.  [2,1,1,0,1,0,0,0,0] = "AABC"
+     * @param freqIn (int[]) stores the histogram of the dictionary letters repettion, i.e. [0,2,1,1] = "BCBD"
+     * @return (boolean) : True if both arrays are identical, otherwise returns false.
+     */
+    private static boolean matches( int[] freq, int[] freqIn ){
+        for ( int i = 0; i < 26; i++ ){
+            if ( freq[i] == 0 && freqIn[i]>0){
+                return false;
+            } else if (freq[i] < freqIn[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Method to return the characters histogram of a given String
+     *
+     * @param string : Base word
+     * @return (int[]): 26-length Array representing the letter alphabet repetitions
+     */
+    private static int[] toFreq( String string )
+    {
+        int[] freq = new int[26];
+        int valA = Integer.valueOf('A');  // Distinction for Comparing only with UpperCase Characters
+        for ( char c : string.toCharArray() )
+        {
+            int valC = Integer.valueOf(c);
+            if ( ( valC- valA ) >= 0 && ( valC - valA ) < 26 )
+            {
+                freq[valC - valA] = freq[valC - valA]+ 1;
+            }
+        }
+        return freq;
+    }
 
     /**
      * Returns an English Dictionary instance

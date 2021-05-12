@@ -1,5 +1,6 @@
 package com.endava.workshop.utils.helper;
 
+import com.endava.workshop.data.dictionary.EnglishDictionary;
 import com.endava.workshop.utils.exceptions.IncorrectInputParameterException;
 import com.endava.workshop.utils.exceptions.NullMethodParameterException;
 import com.endava.workshop.utils.exceptions.OutOfMemoryException;
@@ -30,7 +31,6 @@ public class StringManager {
      */
     public StringManager(){ }
 
-
     /**
      * Method to retrieve a List of SubStrings obtained from a root string
      * A root String is a word from which multiple subStrings can be obtained of
@@ -45,7 +45,7 @@ public class StringManager {
         if(str.equals(null) || str.equals("")|| str.equals(" ")) return null;
 
         List <String> stringArr = Arrays.asList(str.split(""));
-        List<String> stringSubsets = getStringSubsetsList(stringArr, 0, stringArr.size() - 1);
+        List<String> stringSubsets =  getStringSubsetsList(stringArr, 0, stringArr.size() - 1);
 
         return stringSubsets;
     }
@@ -81,6 +81,7 @@ public class StringManager {
         }
         return result;
     }
+
 
     /**
      * Method for returning a compound List from summing two List
@@ -145,4 +146,6 @@ public class StringManager {
 
         return seeds.repeat(wTimes) + seeds.substring(0, residual-1);
     }
+
+
 }

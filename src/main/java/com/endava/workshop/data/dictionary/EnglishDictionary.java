@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 import java.util.HashSet;
 import java.util.Set;
 
-
 /**
  * Dictionary Implementation for an English Dictionary instance
  * This class implements BaseDictionary interface in order to provide a minimum set of methods inherent to a Dictionary scheme
@@ -50,7 +49,8 @@ public class EnglishDictionary implements DatabaseDictionary {
 
         Set<String> newDictionary = new HashSet<String>(
                 Set.of(
-                    "RIG", "OR", "OK", "ORG", "WIN", "KING","WORKING", "WON", "ONG", "WORK", "IN", "RING", "ROW"
+                    "RIG", "OR", "OK", "ORG", "WIN", "KING","WORKING",
+                        "WON", "ONG", "WORK", "IN", "RING", "ROW", "KNOW"
                 ));
        return newDictionary;
     }
