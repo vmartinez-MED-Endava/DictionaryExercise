@@ -83,8 +83,8 @@ in a filed name propertieslogs.txt and shown in console, accordingly.
 * Multiple exceptions were included for limiting the forbidden states : EmptyInputParameterException,
 IncorrectInputParameter and OutOFMemoryException. 
 
-### SubString Engine
-The task for obtaining String subsets based on an *Original String* was attacked following a Divide & Conquer 
+### SubString Engine - First Method - Divide and Conquer Approach  
+The first method for obtaining String subsets based on an *Original String* was attacked following a Divide & Conquer 
 approach : All the different combinations were obtaining inferring a tree scheme. This approach is contained
 in the String Manager and saved us Memory resources as we avoid the O(n) = n^2 and implemented a n*log(n).
 
@@ -97,7 +97,43 @@ unique subSets of Strings.
 
       *  Arr = {A,B,C}, Result_Before_Combination-> {{A},{B}, {C}}, Result_After_Combination = {A,B,C,AB,AC,BC,ABC, CA, BC,CB,ABC,CAB,BAC,CBA}
 
-The combination takes into account the order as the assumption made at this point consist in producing subStrings following the String order.
+#### Drawbacks: 
+The main identified drawbacks after having considered and experimented with this recursive approach were:
+
+-   Following a tree scheme would end up dismissing some important combinations. This meant that not all the words could
+    possibly be inferred from a base root. 
+-   Trying to solve the problem from above put a lot of stress to the performance of the algorithm : The derivation of the missing
+    combinations ended up by slowing drastically the velocity of the Test Suite.
+-   The max String length possible was up to 16 characters before crashing out by a Memory Heap Exception
+
+By these reasons a new approach had to be applied. 
+
+### SubString Engine - Second Method - Letters Histogram Comparison
+The second approach consisted in looking at the problem from the English Dictionary domain: In essence, the set of all the 
+valid subStrings derived from a base String is equal to the set of all the words in the dictionary that match the same
+or more letters of the base String. So, this histogram comparison approach took away the problem of memory by one hand and the 
+combinations' calculation by the other hand : A good trick!
+
+ `Base_Word= "WORKING"`
+
+ `Base_Histogram ={"G:1""I:1","K:1",N:1", "O:1","R:1", "W:1"}`
+
+  `Dictionary:{"OR", "WORK", "IN", "AL"}` 
+
+`Dict_Histogram ={` \
+`{"O:1","R:1"}, {"K:1", O:1","R:1", "W:1"},`
+`{"I:1","N:1"}, {"A:1", "L:1"}` \
+`}`
+
+Based on the content of Base_Histogram and Dict_Histogram, we could inferred the words "OR", "WORK", "IN" from the +
+Base Word but not the word "AL" as it was not defined in the Dictionary_Histogram. 
+
+*source* https://codereview.stackexchange.com/questions/166281/find-all-words-in-a-dictionary-that-can-be-made-with-a-string-of-characters-rec
+
+
+
+
+
 
 
 
