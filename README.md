@@ -125,10 +125,12 @@ combinations' calculation by the other hand : A good trick!
 `{"I:1","N:1"}, {"A:1", "L:1"}` \
 `}`
 
-Based on the content of Base_Histogram and Dict_Histogram, we could inferred the words "OR", "WORK", "IN" from the +
-Base Word but not the word "AL" as it was not defined in the Dictionary_Histogram. 
+Observing the content of Base_Histogram and Dict_Histogram, it was possible to derive the words "OR", "WORK", "IN" 
+from a given string, but not the word "AL",  as it was not defined in the Base_Word histogram. 
 
-*source* https://codereview.stackexchange.com/questions/166281/find-all-words-in-a-dictionary-that-can-be-made-with-a-string-of-characters-rec
+
+<strong> Bibliography </strong> 
+- https://codereview.stackexchange.com/questions/166281/find-all-words-in-a-dictionary-that-can-be-made-with-a-string-of-characters-rec
 
 
 
