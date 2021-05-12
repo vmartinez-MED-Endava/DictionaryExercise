@@ -2,8 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="English Dictionary  TestSuite">
 
-    <parameter name="url" value="https://www.saucedemo.com/"/>
-    <parameter name="browser" value="chrome"/>
+    <parameter name="dictionary" value="EnglishDictionary"/>
 
     <test name="Test Endava Workshop - English Dictionary Test - Unit Test">
         <classes>

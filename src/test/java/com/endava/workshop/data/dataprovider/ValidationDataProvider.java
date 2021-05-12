@@ -1,12 +1,17 @@
 package com.endava.workshop.data.dataprovider;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.annotations.DataProvider;
-import org.testng.log4testng.Logger;
 
 /**
- * Validation Data Provider provides PreDefined words to validate the Dictionary was able to find them.
+ * Validation Data Provider provides PreDefined words to validate that Dictionary was able to find them
+ * DataProvider used to provide Test Words for validating the Dictionary performance
+ *
  */
 public class ValidationDataProvider {
+
+    private static Logger logger = LogManager.getLogger(ValidationDataProvider.class);
 
     /**
      * Method to return words for validation.
@@ -16,7 +21,7 @@ public class ValidationDataProvider {
      */
     @DataProvider(name="ValidationProvider")
     public Object[] getInfoProviderParam(){
-        Logger.getLogger(ValidationDataProvider.class).info("Instance of Validation Provider - Returning next set of derived words to contrast with Dictionary ");
+        logger.info("Instance of Validation Provider - Returning next set of derived words to validate against the Dictionary ");
 
         return new Object[][]
                 {

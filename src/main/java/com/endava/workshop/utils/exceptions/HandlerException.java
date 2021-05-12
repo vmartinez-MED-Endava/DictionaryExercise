@@ -9,7 +9,8 @@ import org.apache.logging.log4j.Logger;
  * Following this parent-child pattern permits a better maintainability
  */
 public class HandlerException extends Exception {
-        private Logger logger;
+
+    private static Logger logger = LogManager.getLogger(HandlerException.class);
 
     /**
      * Saves Logs messages in Tracking file
@@ -18,9 +19,6 @@ public class HandlerException extends Exception {
      * @param message (String): Customized Exception message - any String describing the exception cause.
      */
     public HandlerException(String message) {
-        if(logger ==null){
-            logger = LogManager.getLogger(HandlerException.class);
-        }
         logger.info(message);
     }
 

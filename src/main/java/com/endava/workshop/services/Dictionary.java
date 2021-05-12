@@ -17,27 +17,12 @@ import java.util.stream.Collectors;
  * In overall validates using a limited dictionary if a certain word belongs to English language
  * Also returns a dictionary, in this context a set of strings, with some of the English words
  */
-public class Dictionary implements DictionaryImp{
+public class Dictionary implements BaseDictionary {
 
+    private static  Logger logger = LogManager.getLogger(Dictionary.class);
     private EnglishDictionary englishDictionary;
     private StringManager stringManager;
     private Set<String> englishWordsSet;
-    private Logger logger;
-
-
-    /**
-     *  A Dictionary Constructor with the signing of all of the Attributes passed as parameters for a custom class instance
-     * @param englishDictionary (EnglishDictionary) : Instance of a BaseDictionary Interface implementation
-     * @param stringManager (String Manager) : General purpose String class for handling customized operations for the application
-     * @param englishWordsSet (Set<String>) : A set of String which is a limited represention of a dictionary : Limited up to twenty strings
-     * @param logger (Logger) : Logger instance apache.logging.log4j.Logger for tracking the program flow execution
-     */
-    public Dictionary(EnglishDictionary englishDictionary, StringManager stringManager, Set<String> englishWordsSet, Logger logger) {
-        this.englishDictionary = englishDictionary;
-        this.stringManager = stringManager;
-        this.englishWordsSet = englishWordsSet;
-        this.logger = logger;
-    }
 
     /**
      * A Dictionary Constructor with the signing of some of the Attributes passed as parameters for a semi-custom class instance
@@ -49,7 +34,6 @@ public class Dictionary implements DictionaryImp{
     public Dictionary(EnglishDictionary englishDictionary, StringManager stringManager) {
         this.englishDictionary = englishDictionary;
         this.stringManager = stringManager;
-        this.logger = LogManager.getLogger(Dictionary.class);
         this.englishWordsSet = new HashSet<>();
     }
 
@@ -63,7 +47,6 @@ public class Dictionary implements DictionaryImp{
     public Dictionary(Set<String> englishWordsSet) {
         this.englishDictionary = new EnglishDictionary();
         this.stringManager = new StringManager();
-        this.logger = LogManager.getLogger(Dictionary.class);
         this.englishWordsSet = englishWordsSet;
     }
 
@@ -90,7 +73,6 @@ public class Dictionary implements DictionaryImp{
      * @AttributeInitialization logger (Logger) : Logger instance apache.logging.log4j.Logger for tracking the program flow execution
      */
     public Dictionary(){
-        logger = LogManager.getLogger(Dictionary.class);
         this.englishDictionary = new EnglishDictionary();
         this.stringManager = new StringManager();
         this.englishWordsSet = new HashSet<>();
@@ -177,13 +159,13 @@ public class Dictionary implements DictionaryImp{
      * @return (int) Max String length permitted in JVM before noticing performance latency
      */
     public int getMaxStringLengthInMemory(){
-        long availableMemory = Runtime.getRuntime().maxMemory();
+        long availableMemory = Runtime.getRuntime().freeMemory();
         logger.info(" Available memory :" + availableMemory + " bytes.");
 
-        int maxString = (int) Math.floor(Math.log(availableMemory)) / 2;
+        double maxString = Math.floor(Math.log(availableMemory))-3;
         logger.info(" Estimated max String length " + maxString);
 
-        return maxString;
+        return (int) maxString;
     }
 
     /**

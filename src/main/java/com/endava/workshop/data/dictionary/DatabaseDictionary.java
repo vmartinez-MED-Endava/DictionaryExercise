@@ -9,7 +9,7 @@ import java.util.Set;
  * if the word in question belongs to the set, it is assummed the word belongs to the defined language. Otherwise it is
  * assumed the word does not belong to the language.
  */
-public interface BaseDictionary {
+public interface DatabaseDictionary {
 
     /**
      * Create a Dictionary Instance
@@ -35,7 +35,7 @@ public interface BaseDictionary {
     /**
      * Returns the current Dictionary instance, represented via a set of words
      * If no instance of the set has been set, the null object will be returned.
-     * @return
+     * @return (Set<String>) Returns a dictionary instance made of a Collection of Strings
      */
     public abstract Set<String> getDictionary();
 

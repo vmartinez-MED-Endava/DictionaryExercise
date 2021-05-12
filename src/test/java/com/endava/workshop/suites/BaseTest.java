@@ -12,11 +12,10 @@ import org.testng.asserts.SoftAssert;
 public class BaseTest {
 
     SoftAssert softAssert;
-    public static Logger logger;
+    public static Logger logger = LogManager.getLogger(BaseTest.class);
 
     @BeforeTest
     public void setUpEnvironment(){
-        logger = LogManager.getLogger(BaseTest.class);
         logger.info("Setting up a Environment parameters - Logger was established");
     }
 

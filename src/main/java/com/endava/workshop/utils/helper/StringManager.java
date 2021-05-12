@@ -1,19 +1,15 @@
 package com.endava.workshop.utils.helper;
 
 import com.endava.workshop.utils.exceptions.IncorrectInputParameterException;
-import com.endava.workshop.utils.exceptions.NullException;
+import com.endava.workshop.utils.exceptions.NullMethodParameterException;
 import com.endava.workshop.utils.exceptions.OutOfMemoryException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+
 
 /**
  * General class for handling customized operations over Strings objects
@@ -25,29 +21,15 @@ public class StringManager {
      * Logger for tracking the actual flow of the methods called along the program.
      * Loggers the normal flow by info tags and error tags accordingly
      */
-    private Logger logger ;
+    private static Logger logger = LogManager.getLogger(StringManager.class);
 
     /**
      * String Manager Constructor
      * Initializes an Logger Instance if there is none previously set up
      *
      */
-    public StringManager(){
-        if(logger == null) {
-            logger = LogManager.getLogger(StringManager.class);
-        }
-    }
+    public StringManager(){ }
 
-    /**
-     * String Manage Constructor
-     * Constructor for replacing the current Logger instance by a new one passed as Parameter
-     * Logger mus be a org.apache.logging.log4j.Logger class.
-     *
-     * @param logger (Logger) : A new Logger instance.
-     */
-    public StringManager(Logger logger) {
-        this.logger = logger;
-    }
 
     /**
      * Method to retrieve a List of SubStrings obtained from a root string
@@ -61,7 +43,8 @@ public class StringManager {
      */
     public List<String> getStringSubsets(String str) throws OutOfMemoryException {
         if(str.equals(null) || str.equals("")|| str.equals(" ")) return null;
-        List <String> stringArr = stringToStringList(str);
+
+        List <String> stringArr = Arrays.asList(str.split(""));
         List<String> stringSubsets = getStringSubsetsList(stringArr, 0, stringArr.size() - 1);
 
         return stringSubsets;
@@ -133,18 +116,13 @@ public class StringManager {
      * @param str (String): Any String to be filtered - It is recommended a max length of 22 characters to avoid performance latencies
      * @return (String): A String that follows the given conditions : No Special Character nor Numeric Values
      * @throws IncorrectInputParameterException : Exception thrown whenever the String holds special characters
-     * @throws NullException : Exception whenever the user typed a null object as a parameter method
+     * @throws NullMethodParameterException : Exception whenever the user typed a null object as a parameter method
      */
-    public String getOnlyAlphabetLetters(String str) throws IncorrectInputParameterException, NullException {
+    public String getOnlyAlphabetLetters(String str) throws IncorrectInputParameterException, NullMethodParameterException {
 
-        if(str == null) throw new NullException();
+        if(str == null) throw new NullMethodParameterException();
 
-        Pattern pattern = Pattern.compile("[^a-z A-Z]");
-        Matcher matcher = pattern.matcher(str);
-
-        String filteredStr = matcher
-                .replaceAll("")
-                .replace(" ","");
+        String filteredStr = str.replaceAll("[^a-zA-Z]","");
 
         if(filteredStr.length() != str.length()){
             logger.error("Wrong input parameter was typed - Special Character exception");
@@ -156,28 +134,15 @@ public class StringManager {
     }
 
     /**
-     * Method to convert a String to List of chars
-     * @param str (String) String pass by parameter
-     * @return (List<String>) Decomposition of all of the chars of the String and grouped as a List
-     */
-    public List<String> stringToStringList(String str){
-        if(str.length()==0) return null;
-        return Arrays.stream(str.split("")).toList();
-    }
-
-
-    /**
      * Method to generate a random string of a given size without alphabetic and numeric chars
      * @param stringSize (int) : Expected String length as an output
      * @return a String of length stringSize composed of random (A to Z) characters.
      */
     public String generateRandomStringOfSize(int stringSize){
-        String seeds = "INGORKW"; // Base String from which a new String will be produce randomly
+        String seeds = "WORKING"; // Base String from which a new String will be produce randomly
+        int wTimes = stringSize / seeds.length();
+        int residual = stringSize % seeds.length();
 
-        return IntStream.range(0, stringSize)
-                .map(
-                        i -> new SecureRandom().nextInt(seeds.length()))
-                .mapToObj(randomInt -> seeds.substring(randomInt, randomInt + 1))
-                .collect(Collectors.joining());
+        return seeds.repeat(wTimes) + seeds.substring(0, residual-1);
     }
 }

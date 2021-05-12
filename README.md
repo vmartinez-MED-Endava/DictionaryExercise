@@ -35,7 +35,7 @@ false otherwise.
 
 - In this context an EnglishDictionary is a Set of valid English Words stored in the form of a Collection of Strings.
 
-- English Dictionary is reources-limited as it does not contain all the Existent English words. More concisely,
+- English Dictionary is resources-limited as it does not contain all the Existent English words. More concisely,
   the English Dictionary stores substrings derived from the "Working" string. Currently, manages up to 12 words.
   More importantly, English Dictionary preserves the ordering of the String, so a chunked version of the combinations will be implemented. 
 
@@ -45,8 +45,17 @@ false otherwise.
 - UpperCase String is the protocol assumed for storing the Strings in the dictionary, which is represented in this
   context as a set of Strings. All of the Strings are converted to UpperCase before validating its existence inside the EnglishDictionary.
 
-- It is assumed that the longest english word for this exercise is up to 22 characters in length. A longer string will cause distinct
+- It is assumed that the longest english word for this exercise is up to 16 characters in length. A longer string will cause distinct
   system failures as delay, irregular behaviors and out of the memory exception.
+  
+- Whenever a user types a null input or invalid character string, the program execution crashes and the corresponding exception
+  can be seen to the user. No further execution can be done from this point.
+    
+- Whenever user types an invalid character to the program, following this set of invalid characters null \.[]{}()<>*+-=!?^$|1234567890,
+  an InvalidInputParameterException is thrown. No further execution of the program is assumed to be done after this.
+  
+- This is a first prototype for the problem in question and posterior improvements can be done in the near future to complete the product.
+  Client will be patient and happy with the little development steps. 
 
 ### Project Structure
 The Project follows a General Java project scheme where two big sections can be highlighted as well: Main and Test section.
@@ -86,7 +95,7 @@ The left subList is split in half, producing two new subList. This process is re
 The process will be stable when all of the possible characters are isolated one from each other. Finally, a combination process is executed over these items to produce 
 unique subSets of Strings. 
 
-      *  Arr = {A,B,C}, Result_Before_Combination-> {{A},{B}, {C}}, Result_After_Combination = {A,B,C,AB,AC,BC,ABC}
+      *  Arr = {A,B,C}, Result_Before_Combination-> {{A},{B}, {C}}, Result_After_Combination = {A,B,C,AB,AC,BC,ABC, CA, BC,CB,ABC,CAB,BAC,CBA}
 
 The combination takes into account the order as the assumption made at this point consist in producing subStrings following the String order.
 

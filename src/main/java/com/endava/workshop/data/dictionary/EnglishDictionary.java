@@ -1,18 +1,21 @@
 package com.endava.workshop.data.dictionary;
 
-import java.util.Arrays;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.HashSet;
 import java.util.Set;
+
 
 /**
  * Dictionary Implementation for an English Dictionary instance
  * This class implements BaseDictionary interface in order to provide a minimum set of methods inherent to a Dictionary scheme
  * Dictionary in this context refers to a limited set of words
  */
-public class EnglishDictionary implements BaseDictionary {
+public class EnglishDictionary implements DatabaseDictionary {
 
     private Set<String> localDictionary;
-
+    static Logger logger = LogManager.getLogger(EnglishDictionary.class);
 
     /**
      * Constructor for creating a Dictionary based on a local Dictionary formed of a Set of Strings
@@ -31,7 +34,9 @@ public class EnglishDictionary implements BaseDictionary {
      * The default set of Strings is very limited as no more than 20 strings were defined for it
      */
     public EnglishDictionary() {
-        this.localDictionary = createDictionary();
+        logger.info("New instance of English Dictionary created");
+        this.localDictionary = new HashSet<>();
+        this.localDictionary.addAll(this.createDictionary());
     }
 
     /**
@@ -41,13 +46,12 @@ public class EnglishDictionary implements BaseDictionary {
      * @return Set<String>
      */
     public Set<String> createDictionary(){
+        logger.info("Pull English Dictionary down - Instance of English dictionary assigned ");
 
         Set<String> newDictionary = new HashSet<String>(
-                Arrays.asList(
-                    "RIG", "OR", "OK", "ORG", "WIN", "KING",
-                    "WORKING", "WON", "ONG", "WORK", "IN", "RING", "ROW"
+                Set.of(
+                    "RIG", "OR", "OK", "ORG", "WIN", "KING","WORKING", "WON", "ONG", "WORK", "IN", "RING", "ROW"
                 ));
-
        return newDictionary;
     }
 
@@ -61,8 +65,8 @@ public class EnglishDictionary implements BaseDictionary {
      * Returns false if the "word" does not belong to the local dictionary
      */
     public boolean isValidWord(String word){
-        String wordUpperCase = word.toUpperCase();
-        return this.localDictionary.contains(wordUpperCase);
+
+        return this.localDictionary.contains(word.toUpperCase());
     }
 
     /**
@@ -72,7 +76,9 @@ public class EnglishDictionary implements BaseDictionary {
      * @param newDictionary (Set<String>) Set of Strings to replace the old local dictionary instance
      */
     public void updateDictionary(Set<String> newDictionary){
-        this.localDictionary = newDictionary;
+        logger.info("Instance of English Dictionary updated");
+
+        this.localDictionary.addAll(newDictionary);
     }
 
     /**
@@ -81,6 +87,8 @@ public class EnglishDictionary implements BaseDictionary {
      * All of his elements will be removed from memory
      */
     public void removeDictionary(){
+        logger.info("Instance of English Dictionary wiped out");
+
         this.localDictionary.clear();
     }
 
@@ -90,6 +98,8 @@ public class EnglishDictionary implements BaseDictionary {
      * If no local dictionary has been set up, a null object will be returned
      */
     public Set<String> getDictionary(){
+        logger.info("Instance of English Dictionary Returned");
+
         return this.localDictionary;
     }
 }
