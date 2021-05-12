@@ -1,9 +1,6 @@
 package com.endava.workshop.utils.helper;
 
-import com.endava.workshop.data.dictionary.EnglishDictionary;
-import com.endava.workshop.utils.exceptions.IncorrectInputParameterException;
-import com.endava.workshop.utils.exceptions.NullMethodParameterException;
-import com.endava.workshop.utils.exceptions.OutOfMemoryException;
+import com.endava.workshop.utils.exceptions.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -119,9 +116,10 @@ public class StringManager {
      * @throws IncorrectInputParameterException : Exception thrown whenever the String holds special characters
      * @throws NullMethodParameterException : Exception whenever the user typed a null object as a parameter method
      */
-    public String getOnlyAlphabetLetters(String str) throws IncorrectInputParameterException, NullMethodParameterException {
+    public String getOnlyAlphabetLetters(String str) throws HandlerException {
 
         if(str == null) throw new NullMethodParameterException();
+        if(str.length()>26) throw new InputExcededLengthLimitException();
 
         String filteredStr = str.replaceAll("[^a-zA-Z]","");
 
@@ -144,7 +142,7 @@ public class StringManager {
         int wTimes = stringSize / seeds.length();
         int residual = stringSize % seeds.length();
 
-        return seeds.repeat(wTimes) + seeds.substring(0, residual-1);
+        return seeds.repeat(wTimes) + seeds.substring(0, residual);
     }
 
 

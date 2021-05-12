@@ -186,7 +186,7 @@ public class Dictionary implements BaseDictionary {
         long availableMemory = Runtime.getRuntime().freeMemory();
         logger.info(" Available memory :" + availableMemory + " bytes.");
 
-        double maxString = Math.floor(Math.log(availableMemory))-3;
+        double maxString = Math.floor(Math.log(availableMemory))-5;
         logger.info(" Estimated max String length " + maxString);
 
         return (int) maxString;
