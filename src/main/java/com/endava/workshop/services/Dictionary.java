@@ -95,6 +95,17 @@ public class Dictionary implements BaseDictionary {
         return getEnglishWordsFromString(originalString, false);
     }
 
+    /**
+     * Method to return a Collection with all valid English words derived from root String
+     * A Collection of derived words consist in a set of all of the subStrings obtained from a base or root String
+     * For "And" word, the set of subStrings for this word would be set={"A", "AN", "AND"} assuming these are valid words for the dictionary
+     * The process consist in creating a SubString set based on a set of Words contained in a Dictionary by comparing their letters histogram
+     * Using Set as a collection prevents the use of repeated Strings
+     * ** Note: This method implements an Histogram method  - Performance issue are identified for big input string
+     * @param originalString
+     * @return
+     * @throws HandlerException
+     */
     public Set<String> getEnglishWordsFromStringHis(String originalString) throws HandlerException {
 
         return getEnglishWordsFromString(originalString, true);
@@ -107,8 +118,8 @@ public class Dictionary implements BaseDictionary {
      * The process consist in subtracting all of the possible combinations of the subStrings into a List and filtering out the repeated Strings
      * Using Set as a collection prevents the use of repeated Strings
      * ** Note : This method implements a Character Histogram approach for validating which are the derived and valid words.
-     * A histogram character comparison is done for each individual word in the dictionary against the subString histogram. If both histograms match
-     * Then it is a correct english word.
+     * A histogram character comparison is done for each individual word in the dictionary against the subString histogram. If both histograms match,
+     * then it is a correct english word.
      *
      * @param originalString
      * @param noRecursion
@@ -135,7 +146,7 @@ public class Dictionary implements BaseDictionary {
      *
      * @param str (String) : String parameter limited up to 22 characters length
      * @return (String): A cleaned String
-     * @throws HandlerException : Exception thrown whenever the method parameter included any invalidad character.
+     * @throws HandlerException : Exception thrown whenever the method parameter included any invalid character.
      */
     private String cleanString(String str) throws HandlerException {
         String filteredWord = stringManager.getOnlyAlphabetLetters(str);

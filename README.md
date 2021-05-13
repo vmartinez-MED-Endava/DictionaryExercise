@@ -152,7 +152,7 @@ The pages holding these Tests are :
 - Recursive method was able to produce a big portion of the combinations but not all of them. The Binary-tree scheme
   ignored some possible combinations that limited its capacity for producing new and required words.
   
-- Histogram method was able to accomplish the requered task at an exceptional speed compared with the Recursive method. 
+- Histogram method was able to accomplish the required task at an exceptional speed compared with the Recursive method. 
   Not producing unnecessary combinations was the key-trick in this approach.
   
 - The time execution difference, the high memory waste and the capacity for retrieving all the required words, made 
