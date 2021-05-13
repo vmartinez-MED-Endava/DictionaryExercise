@@ -143,9 +143,9 @@ Both approaches were tested under the same conditions  as :
     <li> Capacity of the program for returning all the set of valid english words</li>
 </ul>
 
-The pages holding these Tests are :
-- RecursiveDictionaryTest which implements a Divide and Conquer approach
-- HistogramDictionaryTest which implements the Letters Frequency approach
+The classes showing these validations are :
+- <Strong>RecursiveDictionaryTest</Strong>:  implements a Divide and Conquer approach
+- <Strong>HistogramDictionaryTest </Strong>:  which implements the Letters Frequency approach
 
 ### Results
 
