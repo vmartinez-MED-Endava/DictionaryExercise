@@ -144,8 +144,8 @@ Both approaches were tested under the same conditions  as :
 </ul>
 
 The classes showing these validations are :
-- <Strong>RecursiveDictionaryTest</Strong>:  implements a Divide and Conquer approach
-- <Strong>HistogramDictionaryTest </Strong>:  which implements the Letters Frequency approach
+- <Strong>RecursiveDictionaryTest</Strong> : validates Divide and Conquer approach
+- <Strong>HistogramDictionaryTest </Strong>:  validates the Letters Frequency approach
 
 ### Results
 
