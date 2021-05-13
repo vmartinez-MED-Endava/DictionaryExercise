@@ -4,11 +4,18 @@
 
     <parameter name="dictionary" value="EnglishDictionary"/>
 
-    <test name="Test Endava Workshop - English Dictionary Test - Unit Test">
+
+    <test name="Test Endava Workshop - English Dictionary Test - HISTOGRAM Approach">
         <classes>
-            <class name="com.endava.workshop.suites.DictionaryTest">
+            <class name="com.endava.workshop.suites.HistogramDictionaryTest">
             </class>
         </classes>
     </test>
 
+    <test name="Test Endava Workshop - English Dictionary Test - DIVIDE AND CONQUER Approach">
+        <classes>
+            <class name="com.endava.workshop.suites.RecursiveDictionaryTest">
+            </class>
+        </classes>
+    </test>
 </suite>

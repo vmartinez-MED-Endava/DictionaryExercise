@@ -49,8 +49,8 @@ public class EnglishDictionary implements DatabaseDictionary {
 
         Set<String> newDictionary = new HashSet<String>(
                 Set.of(
-                    "RIG", "OR", "OK", "ORG", "WIN", "KING","WORKING",
-                        "WON", "ONG", "WORK", "IN", "RING", "ROW", "KNOW"
+                        "KNOW", "RIG", "OR", "OK", "ORG", "WIN", "KING","WORKING",
+                        "WON", "ONG", "WORK", "IN", "RING", "ROW"
                 ));
        return newDictionary;
     }

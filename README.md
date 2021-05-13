@@ -128,6 +128,35 @@ combinations' calculation by the other hand : A good trick!
 Observing the content of Base_Histogram and Dict_Histogram, it was possible to derive the words "OR", "WORK", "IN" 
 from a given string, but not the word "AL",  as it was not defined in the Base_Word histogram. 
 
+#### Drawbacks:
+- This approach does not explore all the possible combinations that are not english-valid. This to say that 
+  solution is directly -dependent of a good dictionary and the availability of this service. So, no solution could 
+  be inferred from the Histogram approach without a dictionary utility whereas the recursive solution method provides
+  a BIG set with potential english words. 
+  
+
+### Test Suites
+Both approaches were tested under the same conditions  as :
+<ul>
+    <li> Wrong Input Parameters as numerical, null and special characters inputs </li>
+    <li> Really bit String input, up to 25 valid characters to test performance under load </li>
+    <li> Capacity of the program for returning all the set of valid english words</li>
+</ul>
+
+The pages holding these Tests are :
+- RecursiveDictionaryTest which implements a Divide and Conquer approach
+- HistogramDictionaryTest which implements the Letters Frequency approach
+
+### Results
+
+- Recursive method was able to produce a big portion of the combinations but not all of them. The Binary-tree scheme
+  ignored some possible combinations that limited its capacity for producing new and required words.
+  
+- Histogram method was able to accomplish the requered task at an exceptional speed compared with the Recursive method. 
+  Not producing unnecessary combinations was the key-trick in this approach.
+  
+- The time execution difference, the high memory waste and the capacity for retrieving all the required words, made 
+  the Histogram method a winner this time. 
 
 <strong> Bibliography </strong> 
 - https://codereview.stackexchange.com/questions/166281/find-all-words-in-a-dictionary-that-can-be-made-with-a-string-of-characters-rec

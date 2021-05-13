@@ -38,7 +38,7 @@ public class StringManager {
      *
      * If no valid String or null object is passed by parameter, the method returns a null List.
      */
-    public List<String> getStringSubsets(String str) throws OutOfMemoryException {
+    public List<String> getStringSubsetsRecursively(String str) throws OutOfMemoryException {
         if(str.equals(null) || str.equals("")|| str.equals(" ")) return null;
 
         List <String> stringArr = Arrays.asList(str.split(""));
@@ -121,7 +121,9 @@ public class StringManager {
         if(str == null) throw new NullMethodParameterException();
         if(str.length()>26) throw new InputExcededLengthLimitException();
 
-        String filteredStr = str.replaceAll("[^a-zA-Z]","");
+        String filteredStr = str
+                .replaceAll("[^a-zA-Z]","")
+                .toUpperCase();
 
         if(filteredStr.length() != str.length()){
             logger.error("Wrong input parameter was typed - Special Character exception");
@@ -129,7 +131,7 @@ public class StringManager {
             throw new IncorrectInputParameterException();
         }
 
-        return filteredStr.toUpperCase();
+        return filteredStr;
     }
 
     /**

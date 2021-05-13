@@ -10,6 +10,8 @@ import java.util.Set;
  * isEnglishWord(String) : Returns true if the passed String parameter belongs to the Local dictionary
  */
 public interface BaseDictionary {
-    Set<String> getEnglishWordsFromString(String originalString) throws HandlerException;
+    Set<String> getEnglishWordsFromStringRec(String originalString) throws HandlerException;
+    public Set<String> getEnglishWordsFromStringHis(String originalString) throws HandlerException;
+
     boolean isEnglishWord(String word);
 }

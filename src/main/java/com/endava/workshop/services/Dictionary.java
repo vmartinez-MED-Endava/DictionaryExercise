@@ -90,9 +90,14 @@ public class Dictionary implements BaseDictionary {
      * @return (Set<String>): Returns a Set of Valid English Strings
      * @throws HandlerException
      */
-    public Set<String> getEnglishWordsFromString(String originalString) throws HandlerException {
+    public Set<String> getEnglishWordsFromStringRec(String originalString) throws HandlerException {
 
         return getEnglishWordsFromString(originalString, false);
+    }
+
+    public Set<String> getEnglishWordsFromStringHis(String originalString) throws HandlerException {
+
+        return getEnglishWordsFromString(originalString, true);
     }
 
     /**
@@ -110,12 +115,12 @@ public class Dictionary implements BaseDictionary {
      * @return
      * @throws HandlerException
      */
-    public Set<String> getEnglishWordsFromString(String originalString, boolean noRecursion) throws HandlerException{
+    private Set<String> getEnglishWordsFromString(String originalString, boolean noRecursion) throws HandlerException{
         String filteredStr = cleanString(originalString);
 
         List<String> stringSubsetsList = (noRecursion)?
                 getHistogramSubsetsList(originalString, englishDictionary):
-                stringManager.getStringSubsets(filteredStr);
+                stringManager.getStringSubsetsRecursively(filteredStr);
 
         this.englishWordsSet = filterEnglishWords(stringSubsetsList);
 

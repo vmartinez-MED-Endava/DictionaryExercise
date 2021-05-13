@@ -20,7 +20,7 @@ public class SearchDataProvider {
         logger.info("Instance of String Provider - Locating word for next Dictionary Search");
         return new Object[][]
                 {
-                        { "Working"},
+                        { "WORKING"},
                 };
     }
 }
