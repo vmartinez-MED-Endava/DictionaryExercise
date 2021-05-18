@@ -31,68 +31,68 @@ false otherwise.
 
 
 ### General Assumptions
-- The mocking online Dictionary is consumed through a DictionaryImpl interface: The Implementation of this mocked dictionary is known as an EnglishDictionary.
+- The mocking online Dictionary is consumed through a DatabaseDictionary interface: The Implementation of this mocked dictionary is known as an EnglishDictionary.
 
 - In this context an EnglishDictionary is a Set of valid English Words stored in the form of a Collection of Strings.
 
-- English Dictionary is resources-limited as it does not contain all the Existent English words. More concisely,
-  the English Dictionary stores substrings derived from the "Working" string. Currently, manages up to 12 words.
-  More importantly, English Dictionary preserves the ordering of the String, so a chunked version of the combinations will be implemented. 
+- English Dictionary is resources-limited as it does not contain all the existent English words. More concisely,
+  the English Dictionary stores substrings derived from the "Working" string. Currently, manages less than 14 words.
 
 - As stated above, EnglishDictionary is a set of words. Words inside the set belongs to English language. Otherwise, it is assumed it is not
   an english word.
 
 - UpperCase String is the protocol assumed for storing the Strings in the dictionary, which is represented in this
-  context as a set of Strings. All of the Strings are converted to UpperCase before validating its existence inside the EnglishDictionary.
+  context as a set of Strings. All the Strings are converted to UpperCase before validating its existence inside the EnglishDictionary.
 
-- It is assumed that the longest english word for this exercise is up to 16 characters in length. A longer string will cause distinct
-  system failures as delay, irregular behaviors and out of the memory exception.
+- It is assumed that the longest english word for this exercise is up to 26 characters in length. A longer string will cause distinct
+  system failures as delay, irregular behaviors or an Illegal Argument Exception.
   
-- Whenever a user types a null input or invalid character string, the program execution crashes and the corresponding exception
+- Whenever a user types a null input or invalid character string, the program execution crashes, and the corresponding exception
   can be seen to the user. No further execution can be done from this point.
     
-- Whenever user types an invalid character to the program, following this set of invalid characters null \.[]{}()<>*+-=!?^$|1234567890,
-  an InvalidInputParameterException is thrown. No further execution of the program is assumed to be done after this.
+- Whenever a user types an invalid character to the program, considering the following characters  as invalid null \.[]{}()<>*+-=!?^$|1234567890,
+  an IllegalArgumentException is thrown. No further execution of the program is assumed to be done after this.
   
 - This is a first prototype for the problem in question and posterior improvements can be done in the near future to complete the product.
   Client will be patient and happy with the little development steps. 
 
 ### Project Structure
 The Project follows a General Java project scheme where two big sections can be highlighted as well: Main and Test section.
-* A DictionaryImpl interface dictates the necessary methods for a Dictionary instance
+* A BaseDictionary interface holds the required methods for providing a business solution. 
+  Its implementation is a Dictionary instance
   
-* A BaseTest defines common adjustments applied before each Test suite
+* A BaseTest defines common methods and adjustments applied before each Test suite
 
 <img src="repo.images/ProjectStructure.PNG" alt="Project Structure" height="600"/>
 
-* POM is declared to keep on track of the required dependencies : TestNG and Log4j.
+* POM is declared to keep track the required dependencies : TestNG and Log4j.
 
 * TestNG Annotations are implemented for setting a correct test flow, besides of validating some common exceptions shown in some Tests
 
 * Two types of DataProviders were included : <strong>SearchPattern</strong> & <strong>ValidationData</strong>. 
 
-* Persistence Layer : The function isEnglishWord() made use of a mocked DataBase in charge of
+* Persistence Layer : The function isEnglishWord() make use of a mocked DataBase in charge of
 storing the required dictionary. As many dictionaries could be included, not just an English one, 
-  an implementation named BaseDictionary dictates the common methods any dictionary should display.
+  an implementation named BaseDictionary dictates the common methods any dictionary should provide.
   
 * Logger instances track each event during the Test Suite execution. These logs were stored
-in a filed name propertieslogs.txt and shown in console, accordingly. 
+in a file named propertieslogs.txt and shown in console, accordingly. 
   
 * <strong>Dictionary Class</strong> only verifies if certain word exists against a limited and customized dictionary (i.e. English Dictionary).
 
-* Multiple exceptions were included for limiting the forbidden states : EmptyInputParameterException,
-IncorrectInputParameter and OutOFMemoryException. 
+* Exceptions were included for preventing the forbidden states : IllegalArgumentException, NullPointerException
+and ThreadTimeoutException. 
 
 ### SubString Engine - First Method - Divide and Conquer Approach  
 The first method for obtaining String subsets based on an *Original String* was attacked following a Divide & Conquer 
-approach : All the different combinations were obtaining inferring a tree scheme. This approach is contained
+approach : All the different combinations were obtained based-on a tree scheme. This approach is contained
 in the String Manager and saved us Memory resources as we avoid the O(n) = n^2 and implemented a n*log(n).
 
 <img src="repo.images/divide_and_conquer.jpg" alt="Divide & Conquer" height="400"/>
 
 This specific method follows a divide and conquer approach. Initially a List is split in half, returning two subLists: the left subList and the right subList.
-The left subList is split in half, producing two new subList. This process is repeated up to achieve a unique char level.  The process is repeated by the right subList. 
-The process will be stable when all of the possible characters are isolated one from each other. Finally, a combination process is executed over these items to produce 
+The left subList is split in half, producing two new subLists. This process is repeated consecutively up to an unique char level.  The process is repeated for the first right subList
+as well. The process will be stable when all the possible characters are isolated one from each other. Finally, a combination process is executed over these items to produce 
 unique subSets of Strings. 
 
       *  Arr = {A,B,C}, Result_Before_Combination-> {{A},{B}, {C}}, Result_After_Combination = {A,B,C,AB,AC,BC,ABC, CA, BC,CB,ABC,CAB,BAC,CBA}

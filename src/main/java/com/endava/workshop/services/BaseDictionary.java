@@ -1,6 +1,5 @@
 package com.endava.workshop.services;
 
-import com.endava.workshop.utils.exceptions.HandlerException;
 import java.util.Set;
 
 /**
@@ -10,8 +9,7 @@ import java.util.Set;
  * isEnglishWord(String) : Returns true if the passed String parameter belongs to the Local dictionary
  */
 public interface BaseDictionary {
-    Set<String> getEnglishWordsFromStringRec(String originalString) throws HandlerException;
-    public Set<String> getEnglishWordsFromStringHis(String originalString) throws HandlerException;
-
+    Set<String> getEnglishWordsFromStringRec(String originalString);
+    Set<String> getEnglishWordsFromStringHis(String originalString);
     boolean isEnglishWord(String word);
 }

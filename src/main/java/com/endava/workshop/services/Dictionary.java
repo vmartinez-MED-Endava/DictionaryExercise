@@ -1,9 +1,7 @@
 package com.endava.workshop.services;
 
 import com.endava.workshop.data.dictionary.EnglishDictionary;
-import com.endava.workshop.utils.exceptions.EmptyInputParameterException;
-import com.endava.workshop.utils.exceptions.HandlerException;
-import com.endava.workshop.utils.helper.StringManager;
+import com.endava.workshop.utils.StringManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -88,9 +86,8 @@ public class Dictionary implements BaseDictionary {
      * ** Note: This method implements a recursive method following the Divide and Conque approach - Performance issue are identified for big input string
      * @param originalString (String): Root String, Any String limited up two 22 chacracters to avoid performance latencies
      * @return (Set<String>): Returns a Set of Valid English Strings
-     * @throws HandlerException
      */
-    public Set<String> getEnglishWordsFromStringRec(String originalString) throws HandlerException {
+    public Set<String> getEnglishWordsFromStringRec(String originalString) {
 
         return getEnglishWordsFromString(originalString, false);
     }
@@ -102,11 +99,10 @@ public class Dictionary implements BaseDictionary {
      * The process consist in creating a SubString set based on a set of Words contained in a Dictionary by comparing their letters histogram
      * Using Set as a collection prevents the use of repeated Strings
      * ** Note: This method implements an Histogram method  - Performance issue are identified for big input string
-     * @param originalString
-     * @return
-     * @throws HandlerException
+     * @param originalString (String): Root String, Any String limited up two 22 chacracters to avoid performance latencies
+     * @return (Set<String>): Returns a Set of Valid English Strings
      */
-    public Set<String> getEnglishWordsFromStringHis(String originalString) throws HandlerException {
+    public Set<String> getEnglishWordsFromStringHis(String originalString){
 
         return getEnglishWordsFromString(originalString, true);
     }
@@ -121,12 +117,11 @@ public class Dictionary implements BaseDictionary {
      * A histogram character comparison is done for each individual word in the dictionary against the subString histogram. If both histograms match,
      * then it is a correct english word.
      *
-     * @param originalString
-     * @param noRecursion
-     * @return
-     * @throws HandlerException
+     * @param originalString (String): Root String, Any String limited up two 22 chacracters to avoid performance latencies
+     * @param noRecursion (boolean) Variable to know whether to apply the Histogram method. Otherwise the Recursive method will be executed
+     * @return (Set<String>): Returns a Set of Valid English Strings
      */
-    private Set<String> getEnglishWordsFromString(String originalString, boolean noRecursion) throws HandlerException{
+    private Set<String> getEnglishWordsFromString(String originalString, boolean noRecursion) {
         String filteredStr = cleanString(originalString);
 
         List<String> stringSubsetsList = (noRecursion)?
@@ -146,14 +141,13 @@ public class Dictionary implements BaseDictionary {
      *
      * @param str (String) : String parameter limited up to 22 characters length
      * @return (String): A cleaned String
-     * @throws HandlerException : Exception thrown whenever the method parameter included any invalid character.
      */
-    private String cleanString(String str) throws HandlerException {
+    private String cleanString(String str){
         String filteredWord = stringManager.getOnlyAlphabetLetters(str);
 
         if (filteredWord == "" || filteredWord.equals(null)) {
             logger.info("String had invalid values - " +str);
-            throw new EmptyInputParameterException();
+            throw new IllegalArgumentException();
         }
 
         logger.info("String followed the specified requirements : " + filteredWord);

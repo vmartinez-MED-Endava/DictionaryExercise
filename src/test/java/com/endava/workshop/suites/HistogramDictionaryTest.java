@@ -3,7 +3,6 @@ package com.endava.workshop.suites;
 import com.endava.workshop.data.dataprovider.SearchDataProvider;
 import com.endava.workshop.data.dataprovider.ValidationDataProvider;
 import com.endava.workshop.services.Dictionary;
-import com.endava.workshop.utils.exceptions.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -41,70 +40,70 @@ public class HistogramDictionaryTest extends BaseTest {
         dictionary = new Dictionary();
     }
 
-    @Test(description = "Validate Dictionary output when null is typed as an input parameter", expectedExceptions = NullMethodParameterException.class, priority = 1)
-    public void nullInputDictionaryValidation() throws HandlerException {
+    @Test(description = "Validate Dictionary output when null is typed as an input parameter", expectedExceptions = NullPointerException.class, priority = 1)
+    public void nullInputDictionaryValidation() {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringHis(NULL_OBJECT);
 
         softAssert.assertNull(derivedWords, "The list of English Words is null");
     }
 
     @Test(description = "Validate Dictionary output when an Empty Input is passed by parameter",
-            expectedExceptions = EmptyInputParameterException.class, priority = 2)
-    public void noInputOnDictionaryValidation() throws HandlerException {
+            expectedExceptions = IllegalArgumentException.class, priority = 2)
+    public void noInputOnDictionaryValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringHis(EMPTY_STRING);
 
         softAssert.assertNull(derivedWords, "The list of English Words is null");
     }
 
     @Test(description = "Validate Dictionary output when a space Input is passed by parameter",
-            expectedExceptions = IncorrectInputParameterException.class, priority = 3)
-    public void spaceCharInputOnDictionaryValidation() throws HandlerException {
+            expectedExceptions = IllegalArgumentException.class, priority = 3)
+    public void spaceCharInputOnDictionaryValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringHis(ONE_SPACED_EMPTY_STRING);
 
         softAssert.assertNull(derivedWords, "The list of English Words is null");
     }
 
     @Test(description = "Validate Dictionary output when a Three empty space Input is passed by parameter",
-            expectedExceptions = EmptyInputParameterException.class, priority = 4)
-    public void threeEmptySpaceCharInputOnDictionaryValidation() throws HandlerException {
+            expectedExceptions = IllegalArgumentException.class, priority = 4)
+    public void threeEmptySpaceCharInputOnDictionaryValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringHis(EMPTY_STRING);
 
         softAssert.assertNull(derivedWords, "The list of English Words is null");
     }
 
     @Test(description = "Validate Dictionary output when a unique special character Input is passed by parameter",
-            expectedExceptions = IncorrectInputParameterException.class, priority = 5)
-    public void specialCharacterInputOnDictionaryValidation() throws HandlerException {
+            expectedExceptions = IllegalArgumentException.class, priority = 5)
+    public void specialCharacterInputOnDictionaryValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringHis(SPECIAL_CHARACTER);
 
         softAssert.assertNull(derivedWords, "The list of English Words is null");
     }
 
     @Test(description = "Validate Dictionary output when a Two special characters Input are passed by parameter",
-            expectedExceptions = IncorrectInputParameterException.class, priority = 6)
-    public void multipleSpecialCharactersInputOnDictionaryValidation() throws HandlerException {
+            expectedExceptions = IllegalArgumentException.class, priority = 6)
+    public void multipleSpecialCharactersInputOnDictionaryValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringHis(TWO_SPECIAL_CHARACTERS);
 
         softAssert.assertNull(derivedWords, "The list of English Words is null");
     }
 
     @Test(description = "Validate Dictionary output with random valid input", priority = 7)
-    public void twoValidCharsInputOnDictionaryValidation() throws HandlerException {
+    public void twoValidCharsInputOnDictionaryValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringHis(TWO_VALID_CHARACTERS);
 
         softAssert.assertTrue(derivedWords.isEmpty(), "Not words could be inferred from just two valid characters");
     }
 
     @Test(description = "Validate Dictionary output with long random input with spaces in it ",
-            expectedExceptions = IncorrectInputParameterException.class, priority = 8)
-    public void invalidLongCharsInputOnDictionaryValidation() throws HandlerException {
+            expectedExceptions = IllegalArgumentException.class, priority = 8)
+    public void invalidLongCharsInputOnDictionaryValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringHis(ONE_RANDOM_SENTENCE_WITH_SPACES);
 
         softAssert.assertTrue(!derivedWords.isEmpty(), "The list of English Words is not empty");
     }
 
     @Test(description = "Validate Dictionary output with long random input without spaces in it ", priority = 9)
-    public void longCharsInputOnDictionaryValidation() throws HandlerException {
+    public void longCharsInputOnDictionaryValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringHis(ONE_RANDOM_SENTENCE_WITHOUT_SPACES);
         Set<String> dictionaryWords = dictionary.getEnglishDictionary().getDictionary();
 
@@ -112,7 +111,7 @@ public class HistogramDictionaryTest extends BaseTest {
     }
 
     @Test(description = "Validate English Dictionary Words could be inferred from the algorithm output ", priority = 10)
-    public void inferenceEnglishDictionaryDatasetValidation() throws HandlerException {
+    public void inferenceEnglishDictionaryDatasetValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringHis("WORKING");
         Set<String> testDataSet = new HashSet<>(Set.of("WORK", "KING", "ROW", "RING", "KNOW"));
 
@@ -121,7 +120,7 @@ public class HistogramDictionaryTest extends BaseTest {
 
     @Test(description = "Validate Dictionary output with default wordTest", priority = 11,
             dataProvider = "StringProvider", dataProviderClass = SearchDataProvider.class)
-    public void predeterminedWordInputOnDictionaryValidation(String wordTest) throws HandlerException {
+    public void predeterminedWordInputOnDictionaryValidation(String wordTest)  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringHis(wordTest);
 
         softAssert.assertTrue(derivedWords.containsAll(dictionary.getEnglishDictionary().getDictionary()), "The list of English Words is not empty");
@@ -129,7 +128,7 @@ public class HistogramDictionaryTest extends BaseTest {
 
     @Test(description = "Validate expected derived words were stored in Dictionary ", priority = 12,
             dataProvider = "ValidationProvider", dataProviderClass = ValidationDataProvider.class)
-    public void expectedDerivedWordsOnDictionaryValidation(String wordTest, String valStr1, String valStr2, String valStr3, String valStr4) throws HandlerException {
+    public void expectedDerivedWordsOnDictionaryValidation(String wordTest, String valStr1, String valStr2, String valStr3, String valStr4)  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringHis(wordTest);
 
         softAssert.assertTrue(dictionary.containsString(valStr1), "Test Word was found in Dictionary");
@@ -142,7 +141,7 @@ public class HistogramDictionaryTest extends BaseTest {
     }
 
     @Test(description = "Validate all of the contained words in English Dictionary were derived via algorithm ", priority = 13)
-    public void inferenceWordsValidation() throws HandlerException {
+    public void inferenceWordsValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringHis(ONE_RANDOM_SENTENCE_WITHOUT_SPACES);
         Set<String> dictionaryWords = dictionary.getEnglishDictionary().getDictionary();
 
@@ -151,7 +150,7 @@ public class HistogramDictionaryTest extends BaseTest {
 
     @Test(description = "Validate a lowercase String gets converted into a UpperCase string", priority = 14,
             dataProvider = "StringProvider", dataProviderClass = SearchDataProvider.class)
-    public void validateLowercaseToUppercaseConversion(String wordTest) throws HandlerException {
+    public void validateLowercaseToUppercaseConversion(String wordTest)  {
         dictionary.getEnglishWordsFromStringHis(wordTest);
 
         softAssert.assertTrue(dictionary.containsString(UPPERCASE_TEST_WORD), "KING Word was found in Dictionary");
@@ -162,7 +161,7 @@ public class HistogramDictionaryTest extends BaseTest {
     }
 
     @Test(description = "Validate Maximum String length based of the memory capacity available", priority = 15)
-    public void longStringToTestMemoryCapacityValidation() throws HandlerException {
+    public void longStringToTestMemoryCapacityValidation()  {
         int maxStringLength = dictionary.getMaxStringLengthInMemory();
         String maxValidString = dictionary.getRandomStringOfSize(maxStringLength);
         Set<String> maxDictionary = dictionary.getEnglishWordsFromStringHis(maxValidString);
@@ -174,7 +173,7 @@ public class HistogramDictionaryTest extends BaseTest {
     }
 
     @Test(description = "Validate Overpassed String length based of the memory capacity available", priority = 16)
-    public void stringOverpassedMemoryCapacityValidation() throws HandlerException {
+    public void stringOverpassedMemoryCapacityValidation()  {
         String overpassedString = dictionary.getRandomStringOfSize(MAX_VALID_STRING_LENGTH);
         Set<String> overpassedDictionary = dictionary.getEnglishWordsFromStringHis(overpassedString);
 
@@ -182,29 +181,29 @@ public class HistogramDictionaryTest extends BaseTest {
     }
 
     @Test(description = "Validate if Numbers passed by parameter belong to English Dictionary",
-            expectedExceptions = IncorrectInputParameterException.class, priority = 17)
-    public void inputStringContainNumbersValidation() throws HandlerException {
+            expectedExceptions = IllegalArgumentException.class, priority = 17)
+    public void inputStringContainNumbersValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringHis(NUMBERS_STRING);
 
         softAssert.assertNull(derivedWords, "The collection of English words is not empty");
     }
 
     @Test(description = " Validate whether two repeated valid words can be recognized as one valid word in the Dictionary", priority = 18)
-    public void twoRepeatedValidStringsValidation() throws HandlerException {
+    public void twoRepeatedValidStringsValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringHis(REPEATED_VALID_STRINGS);
 
         softAssert.assertTrue(!derivedWords.isEmpty(), "The collection of English words is not empty");
     }
 
     @Test(description = " Validate whether a really big String can be passed to the algorithm - 20 characters", priority = 19, timeOut = 5000)
-    public void reallyBigStringOutputValidation() throws HandlerException {
+    public void reallyBigStringOutputValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringHis(BIG_TEST_WORD);
 
         softAssert.assertEquals(derivedWords, dictionary.getEnglishDictionary().getDictionary());
     }
 
-    @Test(description = " Validate a String can not be longer thant 26-characters String ", priority = 20, expectedExceptions = InputExcededLengthLimitException.class)
-    public void exceedInputStringLegalLengthOutputValidation() throws HandlerException {
+    @Test(description = " Validate a String can not be longer thant 26-characters String ", priority = 20, expectedExceptions = IllegalArgumentException.class)
+    public void exceedInputStringLegalLengthOutputValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringHis(dictionary.getRandomStringOfSize(27));
 
         softAssert.assertEquals(derivedWords, dictionary.getEnglishDictionary().getDictionary());

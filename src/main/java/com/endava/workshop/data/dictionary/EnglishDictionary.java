@@ -19,16 +19,16 @@ public class EnglishDictionary implements DatabaseDictionary {
     /**
      * Constructor for creating a Dictionary based on a local Dictionary formed of a Set of Strings
      * Dictionary in this case  is composed by a set of Strings
-     *
-     * @param localDictionary
+     * @param localDictionary (Set<String>) : A Local Dictionary is represented as a Set of words
      */
     public EnglishDictionary(Set<String> localDictionary){
-        this.localDictionary = localDictionary;
+        logger.info("Updating Local Dictionary after passing Dictionary by parameter");
+        this.localDictionary.addAll(localDictionary);
     }
 
 
     /**
-     * Constructor for initilizing a Dictionary
+     * Constructor for initializing a Dictionary
      * High coupling constructor for initializing a local Dictionary based on a default set of Strings
      * The default set of Strings is very limited as no more than 20 strings were defined for it
      */
@@ -42,7 +42,7 @@ public class EnglishDictionary implements DatabaseDictionary {
      * Method to create and return an English Dictionary represented with a set of predefined strings
      * The dictionary is composed by a set of strings limited up to 20 object instances
      * All instances in local dictionary are derived words from the root word, i.e. Working, for this particular example
-     * @return Set<String>
+     * @return Set<String> : Returns a collection of Valid English words by default
      */
     public Set<String> createDictionary(){
         logger.info("Pull English Dictionary down - Instance of English dictionary assigned ");
@@ -75,10 +75,12 @@ public class EnglishDictionary implements DatabaseDictionary {
      *
      * @param newDictionary (Set<String>) Set of Strings to replace the old local dictionary instance
      */
-    public void updateDictionary(Set<String> newDictionary){
+    @Override
+    public boolean updateDictionary(Set<String> newDictionary){
         logger.info("Instance of English Dictionary updated");
 
         this.localDictionary.addAll(newDictionary);
+        return this.localDictionary.size()>0;
     }
 
     /**
@@ -86,10 +88,12 @@ public class EnglishDictionary implements DatabaseDictionary {
      * The current local dictionary instance, which is represented by a set of strings,  will be wiped out after calling this method
      * All of his elements will be removed from memory
      */
-    public void removeDictionary(){
+    @Override
+    public boolean removeDictionary(){
         logger.info("Instance of English Dictionary wiped out");
 
         this.localDictionary.clear();
+        return this.localDictionary.isEmpty();
     }
 
     /**

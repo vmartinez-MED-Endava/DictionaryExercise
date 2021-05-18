@@ -1,6 +1,5 @@
-package com.endava.workshop.utils.helper;
+package com.endava.workshop.utils;
 
-import com.endava.workshop.utils.exceptions.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,7 +37,7 @@ public class StringManager {
      *
      * If no valid String or null object is passed by parameter, the method returns a null List.
      */
-    public List<String> getStringSubsetsRecursively(String str) throws OutOfMemoryException {
+    public List<String> getStringSubsetsRecursively(String str) {
         if(str.equals(null) || str.equals("")|| str.equals(" ")) return null;
 
         List <String> stringArr = Arrays.asList(str.split(""));
@@ -113,13 +112,11 @@ public class StringManager {
      * In other words, the set of forbidden chars for this method input parameters is:  null \.[]{}()<>*+-=!?^$|1234567890
      * @param str (String): Any String to be filtered - It is recommended a max length of 22 characters to avoid performance latencies
      * @return (String): A String that follows the given conditions : No Special Character nor Numeric Values
-     * @throws IncorrectInputParameterException : Exception thrown whenever the String holds special characters
-     * @throws NullMethodParameterException : Exception whenever the user typed a null object as a parameter method
      */
-    public String getOnlyAlphabetLetters(String str) throws HandlerException {
+    public String getOnlyAlphabetLetters(String str){
 
-        if(str == null) throw new NullMethodParameterException();
-        if(str.length()>26) throw new InputExcededLengthLimitException();
+        if(str == null) throw new NullPointerException();
+        if(str.length()>26) throw new IllegalArgumentException();
 
         String filteredStr = str
                 .replaceAll("[^a-zA-Z]","")
@@ -128,7 +125,7 @@ public class StringManager {
         if(filteredStr.length() != str.length()){
             logger.error("Wrong input parameter was typed - Special Character exception");
             logger.error("Input parameter was : -" + str + "-");
-            throw new IncorrectInputParameterException();
+            throw new IllegalArgumentException();
         }
 
         return filteredStr;

@@ -17,27 +17,27 @@ public interface DatabaseDictionary {
      *
      * @return A set of Words contained in the dictionary.
      */
-    public abstract Set<String> createDictionary();
+     Set<String> createDictionary();
 
     /**
      * Update current dictionary by passing a new set of Words
      * @param newDictionary : Set<String> A new set of words that will properly update the current dictionary
      * No return statement.
      */
-    public abstract void updateDictionary(Set<String> newDictionary);
+     boolean updateDictionary(Set<String> newDictionary);
 
     /**
      * Remove current Dictionary instance, this to say the stored words were cleared.
      * At this point the dictionary does not contain any word available.
      */
-    public abstract void removeDictionary();
+     boolean removeDictionary();
 
     /**
      * Returns the current Dictionary instance, represented via a set of words
      * If no instance of the set has been set, the null object will be returned.
      * @return (Set<String>) Returns a dictionary instance made of a Collection of Strings
      */
-    public abstract Set<String> getDictionary();
+     Set<String> getDictionary();
 
     /**
      * Validate if the current word belongs to the abstraction of a Dictionary represented by the Set of Words.
@@ -45,6 +45,6 @@ public interface DatabaseDictionary {
      * @param word (String) : A String of length up to 22 characters
      * @return boolean : true if the word belongs to the limited set, false otherwise.
      */
-    public abstract boolean isValidWord(String word);
+     boolean isValidWord(String word);
 
 }
