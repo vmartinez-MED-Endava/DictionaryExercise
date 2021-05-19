@@ -47,11 +47,10 @@ public class EnglishDictionary implements DatabaseDictionary {
     public Set<String> createDictionary(){
         logger.info("Pull English Dictionary down - Instance of English dictionary assigned ");
 
-        Set<String> newDictionary = new HashSet<String>(
-                Set.of(
+        Set<String> newDictionary = Set.of(
                         "KNOW", "RIG", "OR", "OK", "ORG", "WIN", "KING","WORKING",
-                        "WON", "ONG", "WORK", "IN", "RING", "ROW"
-                ));
+                        "WON", "ONG", "WORK", "IN", "RING", "ROW");
+
        return newDictionary;
     }
 
