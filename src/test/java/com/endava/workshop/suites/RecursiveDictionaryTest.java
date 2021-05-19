@@ -41,7 +41,7 @@ public class RecursiveDictionaryTest extends BaseTest{
         dictionary = new Dictionary();
     }
 
-    @Test(description = "Validate Dictionary output when null is typed as an input parameter", expectedExceptions = NullPointerException.class, priority = 1)
+    @Test(description = "Validate Dictionary output when null is typed as an input parameter", expectedExceptions = NullPointerException.class)
     public void nullInputDictionaryValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringRec(NULL_OBJECT);
 
@@ -49,7 +49,7 @@ public class RecursiveDictionaryTest extends BaseTest{
     }
 
     @Test(description = "Validate Dictionary output when an Empty Input is passed by parameter",
-            expectedExceptions = IllegalArgumentException.class, priority = 2)
+            expectedExceptions = IllegalArgumentException.class)
     public void noInputOnDictionaryValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringRec(EMPTY_STRING);
 
@@ -57,7 +57,7 @@ public class RecursiveDictionaryTest extends BaseTest{
     }
 
     @Test(description = "Validate Dictionary output when a space Input is passed by parameter",
-            expectedExceptions = IllegalArgumentException.class, priority = 3)
+            expectedExceptions = IllegalArgumentException.class)
     public void spaceCharInputOnDictionaryValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringRec(ONE_SPACED_EMPTY_STRING);
 
@@ -65,7 +65,7 @@ public class RecursiveDictionaryTest extends BaseTest{
     }
 
     @Test(description = "Validate Dictionary output when a Three empty space Input is passed by parameter",
-            expectedExceptions = IllegalArgumentException.class, priority = 4)
+            expectedExceptions = IllegalArgumentException.class)
     public void threeEmptySpaceCharInputOnDictionaryValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringRec(THREE_SPACED_EMPTY_STRING);
 
@@ -73,7 +73,7 @@ public class RecursiveDictionaryTest extends BaseTest{
     }
 
     @Test(description = "Validate Dictionary output when a unique special character Input is passed by parameter",
-            expectedExceptions = IllegalArgumentException.class, priority = 5)
+            expectedExceptions = IllegalArgumentException.class)
     public void specialCharacterInputOnDictionaryValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringRec(SPECIAL_CHARACTER);
 
@@ -81,14 +81,14 @@ public class RecursiveDictionaryTest extends BaseTest{
     }
 
     @Test(description = "Validate Dictionary output when a Two special characters Input are passed by parameter",
-            expectedExceptions = IllegalArgumentException.class, priority = 6)
+            expectedExceptions = IllegalArgumentException.class)
     public void multipleSpecialCharactersInputOnDictionaryValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringRec(TWO_SPECIAL_CHARACTERS);
 
         softAssert.assertNull(derivedWords, "The list of English Words is null");
     }
 
-    @Test(description = "Validate Dictionary output with random valid input", priority = 7)
+    @Test(description = "Validate Dictionary output with random valid input")
     public void twoValidCharsInputOnDictionaryValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringRec(TWO_VALID_CHARACTERS);
 
@@ -96,14 +96,14 @@ public class RecursiveDictionaryTest extends BaseTest{
     }
 
     @Test(description = "Validate Dictionary output with long random input with spaces in it ",
-            expectedExceptions = IllegalArgumentException.class, priority = 8)
+            expectedExceptions = IllegalArgumentException.class)
     public void invalidLongCharsInputOnDictionaryValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringRec(ONE_RANDOM_SENTENCE_WITH_SPACES);
 
         softAssert.assertTrue( derivedWords.isEmpty(), "The list of English Words is not empty");
     }
 
-    @Test(description = "Validate Dictionary output with long random input without spaces in it ", priority = 9)
+    @Test(description = "Validate Dictionary output with long random input without spaces in it ")
     public void longCharsInputOnDictionaryValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringRec(ONE_RANDOM_SENTENCE_WITHOUT_SPACES);
         Set<String> dictionaryWords = dictionary.getEnglishDictionary().getDictionary();
@@ -111,7 +111,7 @@ public class RecursiveDictionaryTest extends BaseTest{
         softAssert.assertTrue(derivedWords.containsAll(dictionaryWords), "The algorithm could inferred all of the dictionary words");
     }
 
-    @Test(description = "Validate English Dictionary Words could not be inferred from the algorithm output ", priority = 10)
+    @Test(description = "Validate English Dictionary Words could not be inferred from the algorithm output ")
     public void inferenceEnglishDictionaryDatasetValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringRec("WORKING");
         Set<String> testDataSet = new HashSet<>(Set.of("WORK", "KING", "ROW", "RING", "KNOW"));
@@ -119,7 +119,7 @@ public class RecursiveDictionaryTest extends BaseTest{
         softAssert.assertFalse(derivedWords.containsAll(testDataSet), "Recursive method was not able to replicate all of the WORDS");
     }
 
-    @Test(description = "Validate Dictionary output with default wordTest - Not all of the words could be inferred", priority = 11,
+    @Test(description = "Validate Dictionary output with default wordTest - Not all of the words could be inferred",
             dataProvider= "StringProvider", dataProviderClass= SearchDataProvider.class)
     public void predeterminedWordInputOnDictionaryValidation(String wordTest)  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringRec(wordTest);
@@ -127,7 +127,7 @@ public class RecursiveDictionaryTest extends BaseTest{
         softAssert.assertFalse(derivedWords.containsAll(dictionary.getEnglishDictionary().getDictionary()), "The list of English Words is not empty");
     }
 
-    @Test(description = "Validate expected derived words were stored in Dictionary ", priority = 12,
+    @Test(description = "Validate expected derived words were stored in Dictionary ",
             dataProvider= "ValidationProvider", dataProviderClass= ValidationDataProvider.class)
     public void expectedDerivedWordsOnDictionaryValidation(String wordTest, String valStr1, String valStr2, String valStr3, String valStr4)  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringRec(wordTest);
@@ -141,7 +141,7 @@ public class RecursiveDictionaryTest extends BaseTest{
         softAssert.assertTrue(dictionary.containsString(valStr4), "Test Word was found in Dictionary");
     }
 
-    @Test(description = "Validate all of the contained words in English Dictionary were derived via algorithm ", priority = 13)
+    @Test(description = "Validate all of the contained words in English Dictionary were derived via algorithm ")
     public void inferenceWordsValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringRec(ONE_RANDOM_SENTENCE_WITHOUT_SPACES);
         Set<String> dictionaryWords = dictionary.getEnglishDictionary().getDictionary();
@@ -150,7 +150,7 @@ public class RecursiveDictionaryTest extends BaseTest{
         softAssert.assertEquals(derivedWords, dictionaryWords);
     }
 
-    @Test(description = "Validate a lowercase String gets converted into a UpperCase string", priority = 14,
+    @Test(description = "Validate a lowercase String gets converted into a UpperCase string",
             dataProvider= "StringProvider", dataProviderClass= SearchDataProvider.class)
     public void validateLowercaseToUppercaseConversion(String wordTest)  {
         dictionary.getEnglishWordsFromStringRec(wordTest);
@@ -162,7 +162,7 @@ public class RecursiveDictionaryTest extends BaseTest{
         softAssert.assertTrue(dictionary.containsString(LOWERCASE_TEST_WORD), "king Word was found in Dictionary");
     }
 
-    @Test(description = "Validate Maximum String length based of the memory capacity available", priority = 15)
+    @Test(description = "Validate Maximum String length based of the memory capacity available")
     public void longStringToTestMemoryCapacityValidation ()  {
         int maxStringLength = dictionary.getMaxStringLengthInMemory();
         String maxValidString = dictionary.getRandomStringOfSize(maxStringLength);
@@ -175,7 +175,7 @@ public class RecursiveDictionaryTest extends BaseTest{
     }
 
     @Test(description = "Validate Overpassed String length based of the memory capacity available",
-            timeOut = 5000, expectedExceptions = ThreadTimeoutException.class, priority = 16)
+            timeOut = 5000, expectedExceptions = ThreadTimeoutException.class)
     public void stringOverpassedMemoryCapacityValidation()  {
         int maxStringLength = dictionary.getMaxStringLengthInMemory() * 2;
         String overpassedString = dictionary.getRandomStringOfSize(MAX_String_Length);
@@ -185,21 +185,21 @@ public class RecursiveDictionaryTest extends BaseTest{
     }
 
     @Test(description = "Validate if Numbers passed by parameter belong to English Dictionary",
-            expectedExceptions = IllegalArgumentException.class, priority = 17)
+            expectedExceptions = IllegalArgumentException.class)
     public void inputStringContainNumbersValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringRec(NUMBERS_STRING);
 
         softAssert.assertNull(derivedWords, "The collection of English words is not empty");
     }
 
-    @Test(description =" Validate whether two repeated valid words can be recognized as one valid word in the Dictionary", priority = 18)
+    @Test(description =" Validate whether two repeated valid words can be recognized as one valid word in the Dictionary")
     public void twoRepeatedValidStringsValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringRec(REPEATED_VALID_STRINGS);
 
         softAssert.assertTrue(!derivedWords.isEmpty(), "The collection of English words is not empty");
     }
 
-    @Test(description =" Validate whether a really big String can be passed to the algorithm - 20 characters", priority = 19,
+    @Test(description =" Validate whether a really big String can be passed to the algorithm - 20 characters",
             timeOut = 5000, expectedExceptions = ThreadTimeoutException.class)
     public void reallyBigStringOutputValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringRec(BIG_TEST_WORD);
@@ -207,7 +207,7 @@ public class RecursiveDictionaryTest extends BaseTest{
         softAssert.assertEquals(derivedWords,dictionary.getEnglishDictionary().getDictionary());
     }
 
-    @Test(description =" Validate a String can not be longer thant 26-characters String ", priority = 20, expectedExceptions = IllegalArgumentException.class)
+    @Test(description =" Validate a String can not be longer thant 26-characters String ", expectedExceptions = IllegalArgumentException.class)
     public void exceedInputStringLegalLengthOutputValidation()  {
         Set<String> derivedWords = dictionary.getEnglishWordsFromStringRec(dictionary.getRandomStringOfSize(27));
 
