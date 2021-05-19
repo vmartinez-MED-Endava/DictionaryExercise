@@ -98,7 +98,7 @@ public class Dictionary implements BaseDictionary {
      * For "And" word, the set of subStrings for this word would be set={"A", "AN", "AND"} assuming these are valid words for the dictionary
      * The process consist in creating a SubString set based on a set of Words contained in a Dictionary by comparing their letters histogram
      * Using Set as a collection prevents the use of repeated Strings
-     * ** Note: This method implements an Histogram method  - Performance issue are identified for big input string
+     * ** Note: This method implements an Histogram method
      * @param originalString (String): Root String, Any String limited up two 22 chacracters to avoid performance latencies
      * @return (Set<String>): Returns a Set of Valid English Strings
      */
@@ -113,7 +113,7 @@ public class Dictionary implements BaseDictionary {
      * For "And" word, the set of subStrings for this word would be set={"A", "AN", "AND"} assuming these are valid words for the dictionary
      * The process consist in subtracting all of the possible combinations of the subStrings into a List and filtering out the repeated Strings
      * Using Set as a collection prevents the use of repeated Strings
-     * ** Note : This method implements a Character Histogram approach for validating which are the derived and valid words.
+     * ** Note : This method allows you to perform a Character Histogram approach or a Divide & Conquer approach for validating which are the derived and valid words.
      * A histogram character comparison is done for each individual word in the dictionary against the subString histogram. If both histograms match,
      * then it is a correct english word.
      *
@@ -134,7 +134,7 @@ public class Dictionary implements BaseDictionary {
     }
 
     /**
-     * Method to clean the String passed by parameter
+     * Method to clean the String passed by parameter from illegal characters
      * This first filters wipes out special characters and numbers as these are not valid for a word Dictionary
      * List of invalid characters is : null \.[]{}()<>*+-=!?^$|1234567890
      * If the String parameter includes any special character, then a Handler Exception will be thrown
