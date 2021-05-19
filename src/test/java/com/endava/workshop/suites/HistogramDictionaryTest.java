@@ -20,7 +20,7 @@ public class HistogramDictionaryTest extends BaseTest {
     private final String NULL_OBJECT = null;
     private final String EMPTY_STRING = "";
     private final String ONE_SPACED_EMPTY_STRING = " ";
-    private final String THREE_SPACED_EMPTY_STRING = " ";
+    private final String THREE_SPACED_EMPTY_STRING = "   ";
     private final String SPECIAL_CHARACTER = "!";
     private final String TWO_SPECIAL_CHARACTERS = "! [";
     private final String TWO_VALID_CHARACTERS = "ab";
@@ -66,7 +66,7 @@ public class HistogramDictionaryTest extends BaseTest {
     @Test(description = "Validate Dictionary output when a Three empty space Input is passed by parameter",
             expectedExceptions = IllegalArgumentException.class, priority = 4)
     public void threeEmptySpaceCharInputOnDictionaryValidation()  {
-        Set<String> derivedWords = dictionary.getEnglishWordsFromStringHis(EMPTY_STRING);
+        Set<String> derivedWords = dictionary.getEnglishWordsFromStringHis(THREE_SPACED_EMPTY_STRING);
 
         softAssert.assertNull(derivedWords, "The list of English Words is null");
     }
